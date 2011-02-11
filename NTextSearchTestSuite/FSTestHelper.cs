@@ -43,5 +43,21 @@ namespace NTextSearchTestSuite{
             return string.Format("{0}.{1}", fileNameWithoutExtension, extention);
         }
 
+        public DirectoryInfo CreateSubFolder(){
+            return CreateSubFolder(_testFolder.FullName);
+        }
+
+        public DirectoryInfo CreateSubFolder(string folderName){
+            var directoryInfo = new DirectoryInfo(Path.Combine(folderName, Guid.NewGuid().ToString()));
+            directoryInfo.Create();
+            return directoryInfo;
+        }
+
+        public void CleanTestFolder(){
+            foreach (var directoryInfo in _testFolder.GetDirectories())
+                directoryInfo.Delete(true);
+            foreach (var fileInfo in _testFolder.GetFiles())
+                fileInfo.Delete();
+        }
     }
 }

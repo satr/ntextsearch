@@ -71,5 +71,18 @@ namespace NTextSearchTestSuite {
                 Assert.IsTrue(0 < _engine.GetFilesInFolder(_testFolderPath).Length);
             }
         }
+
+        [TestMethod]
+        public void TestGetFilesFromFolderRecursive() {
+            _fsTestHelper.CleanTestFolder();
+            var subFolder1 = _fsTestHelper.CreateSubFolder();
+            var subFolder2 = _fsTestHelper.CreateSubFolder(subFolder1.FullName);
+            using(var file1 = FSTestHelper.CreateFileTxt(_testFolderPath))
+            using(var file2 = FSTestHelper.CreateFileTxt(subFolder1.FullName))
+            using(var file3 = FSTestHelper.CreateFileTxt(subFolder2.FullName))
+            {
+                Assert.AreEqual(3, _engine.GetFilesInFolder(_testFolderPath, true).Length);
+            }
+        }
     }
 }
