@@ -8,7 +8,7 @@
     <ProjectGuid>{D6182031-7753-4EF4-BD3E-039376C1B1B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTextSearchLib</RootNamespace>
+    <RootNamespace>NTextSearch</RootNamespace>
     <AssemblyName>NTextSearch</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine.cs" />
+    <Compile Include="ITextSearchPlugin.cs" />
+    <Compile Include="NullPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
