@@ -7,6 +7,12 @@ namespace NTextSearchTestSuite{
         private bool _disposed;
         private static readonly object _sync = new object();
 
+        public static class FileExtention{
+            public const string TXT = "txt";
+            public const string MP3 = "mp3";
+            public const string XML = "xml";
+        }
+
         public DirectoryInfo TestFolder{
             get { return _testFolder ?? (_testFolder = CreateTempFolder()); }
         }
@@ -29,7 +35,15 @@ namespace NTextSearchTestSuite{
         }
 
         public static TestFile CreateFileTxt(string folderPath) {
-            return CreateFile(folderPath, "txt");
+            return CreateFile(folderPath, FileExtention.TXT);
+        }
+
+        public static TestFile CreateFileMp3(string folderPath) {
+            return CreateFile(folderPath, FileExtention.MP3);
+        }
+
+        public static TestFile CreateFileXml(string folderPath) {
+            return CreateFile(folderPath, FileExtention.XML);
         }
 
         private static TestFile CreateFile(string folderPath, string extention) {
