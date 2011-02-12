@@ -50,7 +50,11 @@
   <ItemGroup>
     <Compile Include="Interfaces\ITextSearchPresenter.cs" />
     <Compile Include="Interfaces\ITextSearchView.cs" />
-    <Compile Include="NTextSearchPresenter.cs" />
+    <Compile Include="Presenters\AbstractNotificationHandler.cs" />
+    <Compile Include="Presenters\EnableStateEventArgs.cs" />
+    <Compile Include="Presenters\ErrorNotificationHandler.cs" />
+    <Compile Include="Presenters\ListViewEventArgs.cs" />
+    <Compile Include="Presenters\NTextSearchPresenter.cs" />
     <Compile Include="NTextSearchView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ExitIcon.png" />
+    <Content Include="Resources\RefreshPlugins.png" />
+    <Content Include="Resources\RefreshPlugins16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NTextSearchInt\NTextSearchInt.csproj">

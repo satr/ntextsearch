@@ -38,6 +38,10 @@
             this.groupBoxPlugins = new System.Windows.Forms.GroupBox();
             this.comboBoxPlugins = new System.Windows.Forms.ComboBox();
             this.buttonRefreshPlugins = new System.Windows.Forms.Button();
+            this.listView = new System.Windows.Forms.ListView();
+            this.columnHeaderState = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderFileName = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderTag = new System.Windows.Forms.ColumnHeader();
             this.panelTargetText = new System.Windows.Forms.Panel();
             this.groupBoxTargetText = new System.Windows.Forms.GroupBox();
             this.textBoxTargetText = new System.Windows.Forms.TextBox();
@@ -47,6 +51,7 @@
             this.statusStrip.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
+            this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
             this.panelPlugin.SuspendLayout();
             this.groupBoxPlugins.SuspendLayout();
@@ -128,6 +133,10 @@
             // 
             this.splitContainerMain.Panel1.Controls.Add(this.groupBoxPluginProperties);
             this.splitContainerMain.Panel1.Controls.Add(this.panelPlugin);
+            // 
+            // splitContainerMain.Panel2
+            // 
+            this.splitContainerMain.Panel2.Controls.Add(this.listView);
             this.splitContainerMain.Size = new System.Drawing.Size(695, 319);
             this.splitContainerMain.SplitterDistance = 231;
             this.splitContainerMain.TabIndex = 0;
@@ -188,6 +197,39 @@
             this.buttonRefreshPlugins.UseVisualStyleBackColor = true;
             this.buttonRefreshPlugins.Click += new System.EventHandler(this.buttonRefreshPlugins_Click);
             // 
+            // listView
+            // 
+            this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderState,
+            this.columnHeaderFileName,
+            this.columnHeaderTag});
+            this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView.GridLines = true;
+            this.listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listView.Location = new System.Drawing.Point(0, 0);
+            this.listView.Name = "listView";
+            this.listView.ShowItemToolTips = true;
+            this.listView.Size = new System.Drawing.Size(460, 319);
+            this.listView.TabIndex = 0;
+            this.toolTip.SetToolTip(this.listView, "Move cursor above status to see details");
+            this.listView.UseCompatibleStateImageBehavior = false;
+            this.listView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderState
+            // 
+            this.columnHeaderState.Text = "State";
+            this.columnHeaderState.Width = 120;
+            // 
+            // columnHeaderFileName
+            // 
+            this.columnHeaderFileName.Text = "File name";
+            this.columnHeaderFileName.Width = 300;
+            // 
+            // columnHeaderTag
+            // 
+            this.columnHeaderTag.Text = "";
+            this.columnHeaderTag.Width = 20;
+            // 
             // panelTargetText
             // 
             this.panelTargetText.Controls.Add(this.groupBoxTargetText);
@@ -247,6 +289,7 @@
             this.statusStrip.PerformLayout();
             this.panelMain.ResumeLayout(false);
             this.splitContainerMain.Panel1.ResumeLayout(false);
+            this.splitContainerMain.Panel2.ResumeLayout(false);
             this.splitContainerMain.ResumeLayout(false);
             this.panelPlugin.ResumeLayout(false);
             this.groupBoxPlugins.ResumeLayout(false);
@@ -278,6 +321,10 @@
         private System.Windows.Forms.ComboBox comboBoxPlugins;
         private System.Windows.Forms.Button buttonRefreshPlugins;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ListView listView;
+        private System.Windows.Forms.ColumnHeader columnHeaderState;
+        private System.Windows.Forms.ColumnHeader columnHeaderFileName;
+        private System.Windows.Forms.ColumnHeader columnHeaderTag;
 
     }
 }
