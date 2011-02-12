@@ -48,6 +48,10 @@
     <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NTextSearchInt\NTextSearchInt.csproj">
+      <Project>{EAF232DB-45FF-4333-B446-24020F6855B7}</Project>
+      <Name>NTextSearchInt</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NTextSearchLib\NTextSearchLib.csproj">
       <Project>{D6182031-7753-4EF4-BD3E-039376C1B1B6}</Project>
       <Name>NTextSearchLib</Name>

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchLib", "NTextSear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchTestSuite", "NTextSearchTestSuite\NTextSearchTestSuite.csproj", "{7B7FCCC0-7724-4E04-A82A-7BD7A5589341}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchInt", "NTextSearchInt\NTextSearchInt.csproj", "{EAF232DB-45FF-4333-B446-24020F6855B7}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = NTextSearch.vsmdi
@@ -28,6 +30,10 @@ Global
 		{7B7FCCC0-7724-4E04-A82A-7BD7A5589341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B7FCCC0-7724-4E04-A82A-7BD7A5589341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B7FCCC0-7724-4E04-A82A-7BD7A5589341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF232DB-45FF-4333-B446-24020F6855B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF232DB-45FF-4333-B446-24020F6855B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF232DB-45FF-4333-B446-24020F6855B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF232DB-45FF-4333-B446-24020F6855B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

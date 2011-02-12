@@ -1,5 +1,5 @@
 namespace NTextSearch{
-    internal class NullPlugin : ITextSearchPlugin{
+    internal class NullPlugin : ITextSearch{
         public string FileExtention{
             get { return string.Empty; }
         }
