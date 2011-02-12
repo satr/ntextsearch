@@ -1,8 +1,8 @@
 using NTextSearch;
 
-namespace NTextSearchTestSuite{
-    internal class MockPlugin : ITextSearch{
-        public MockPlugin(string fileExtention){
+namespace NTextSearchTestPlugin{
+    public class TestPlugin : ITextSearch{
+        public TestPlugin(string fileExtention){
             FileExtention = fileExtention;
         }
 
