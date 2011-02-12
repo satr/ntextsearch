@@ -123,8 +123,9 @@ namespace NTextSearchTestSuite {
         [TestMethod]
         public void TestLoadPlugins(){
             _engine.LoadPlugins();
-            Assert.IsTrue(0 < _engine.Plugins.Count);
+            Assert.IsTrue(_engine.Plugins.Count > 0);
         }
+
 
     }
 }
