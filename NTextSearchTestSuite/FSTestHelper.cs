@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.IO;
+using System.Text;
 using NTextSearch;
 
 namespace NTextSearchTestSuite{
@@ -29,26 +31,33 @@ namespace NTextSearchTestSuite{
             }
         }
 
-        public static TestFile CreateFileTst(string folderPath) {
-            return CreateFile(folderPath, FileExtentions.TST);
+        public static TestFile CreateFileTst(string folderPath){
+            return CreateFileTst(folderPath, string.Empty);
+        }
+
+        public static TestFile CreateFileTst(string folderPath, string testText) {
+            return CreateFile(folderPath, FileExtentions.TST, testText, Encoding.ASCII.EncodingName);
         }
 
         public static TestFile CreateFileTxt(string folderPath) {
-            return CreateFile(folderPath, FileExtentions.TXT);
+            return CreateFile(folderPath, FileExtentions.TXT, string.Empty, Encoding.ASCII.EncodingName);
         }
 
         public static TestFile CreateFileMp3(string folderPath) {
-            return CreateFile(folderPath, FileExtentions.MP3);
+            return CreateFile(folderPath, FileExtentions.MP3, string.Empty, Encoding.ASCII.EncodingName);
         }
 
         public static TestFile CreateFileXml(string folderPath) {
-            return CreateFile(folderPath, FileExtentions.XML);
+            return CreateFile(folderPath, FileExtentions.XML, string.Empty, Encoding.ASCII.EncodingName);
         }
 
-        private static TestFile CreateFile(string folderPath, string extention) {
+        private static TestFile CreateFile(string folderPath, string extention, string testText, string encodingName) {
             var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(Path.GetTempFileName());
             var fileInfo = new FileInfo(Path.Combine(folderPath, GetFileName(fileNameWithoutExtension, extention)));
-            fileInfo.Create().Close();
+            using (var fileStream = fileInfo.Create()){
+                var bytes = Encoding.GetEncoding(encodingName).GetBytes(testText);//TODO - add encoding
+                fileStream.Write(bytes, 0, bytes.Length);
+            }
             return new TestFile(fileInfo);
         }
 

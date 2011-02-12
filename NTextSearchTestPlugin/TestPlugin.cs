@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using NTextSearch;
 
 namespace NTextSearchTestPlugin{
+    [TextSearchEngine]
     public class TestPlugin : ITextSearch {
-        public event TextSearchEventHandler OnTextFound;
+        public event TextSearchEventHandler OnNotify;
 
         private readonly object _sync = new object();
 
@@ -25,6 +27,8 @@ namespace NTextSearchTestPlugin{
 
         public Queue<string> FilesToProcess { get; private set; }
 
+        public string TargetText { get; set; }
+
         public void Shutdown(){
             
         }
@@ -34,21 +38,35 @@ namespace NTextSearchTestPlugin{
                 if(!FilesToProcess.Contains(fileFullName))
                     FilesToProcess.Enqueue(fileFullName);
             }
+            if(string.IsNullOrEmpty(TargetText))
+                Notify(fileFullName, TextSearchStatus.TargetTextNotSpecified);
         }
 
-        public string PerformPositiveTestSearchInOneFile(){
+        public string PerformSearch(){
             if (FilesToProcess.Count == 0)
                 return null;
-            var fileName = FilesToProcess.Dequeue();
-            if (OnTextFound != null)
-                OnTextFound(fileName);
-            return fileName;
+            var fileInfo = new FileInfo(FilesToProcess.Dequeue());
+            if(!fileInfo.Exists){
+                Notify(fileInfo, TextSearchStatus.FileNotFound);
+                return fileInfo.FullName;
+            }
+            using (var reader = new StreamReader(fileInfo.OpenRead())){
+                var textFromFile = reader.ReadToEnd();
+                if(textFromFile.Contains(TargetText?? string.Empty))//TODO
+                    Notify(fileInfo, TextSearchStatus.TextFoundInFile);
+                else
+                    Notify(fileInfo, TextSearchStatus.TextNotFoundInFile);
+            }
+            return fileInfo.FullName;
         }
 
-        public string PerformNegativeTestSearchInOneFile(){
-            if (FilesToProcess.Count == 0)
-                return null;
-            return FilesToProcess.Dequeue();
+        private void Notify(string fullFileName, TextSearchStatus textSearchStatus){
+            Notify(new FileInfo(fullFileName), textSearchStatus);
+        }
+
+        private void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus){
+            if (OnNotify != null)
+                OnNotify(new TextSearchEventArg(fileInfo.FullName, textSearchStatus));
         }
     }
 }
