@@ -13,6 +13,7 @@ namespace NTextSearch{
             InitializeComponent();
             Presenter = new NTextSearchPresenter(this);
             Presenter.OnSearchEnabled += (src, args) => { buttonSearch.Enabled = args.Enable; };
+            Presenter.OnAddListItem += (src, args) => listView.Items.Add(args.ListViewItem);
         }
 
         private ITextSearchPresenter Presenter { get; set; }
@@ -31,9 +32,9 @@ namespace NTextSearch{
 
         public void RefreshPlugins(List<ITextSearch> plugins){
             comboBoxPlugins.SuspendLayout();
-            comboBoxPlugins.DisplayMember = "Title";
             comboBoxPlugins.DataSource = null;
             comboBoxPlugins.DataSource = plugins;
+            comboBoxPlugins.DisplayMember = "Title";
             comboBoxPlugins.ResumeLayout(true);
             if (plugins.Count > 0)
                 comboBoxPlugins.SelectedIndex = 0;
