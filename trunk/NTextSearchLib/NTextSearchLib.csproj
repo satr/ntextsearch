@@ -64,6 +64,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>xcopy /Y $(SolutionDir)PluginBin\*plugin.dll $(SolutionDir)bin\plugins</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
