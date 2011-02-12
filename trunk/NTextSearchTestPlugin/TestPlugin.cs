@@ -1,7 +1,8 @@
 using NTextSearch;
 
 namespace NTextSearchTestPlugin{
-    public class TestPlugin : ITextSearch{
+    [TextSearchEngine]
+    public class TestPlugin : ITextSearch {
         public TestPlugin(string fileExtention){
             FileExtention = fileExtention;
         }
