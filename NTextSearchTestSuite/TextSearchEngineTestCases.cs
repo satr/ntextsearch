@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NTextSearch;
 using NTextSearchTestPlugin;
@@ -118,5 +119,12 @@ namespace NTextSearchTestSuite {
                 }
             }
         }
+
+        [TestMethod]
+        public void TestLoadPlugins(){
+            _engine.LoadPlugins();
+            Assert.IsTrue(0 < _engine.Plugins.Count);
+        }
+
     }
 }

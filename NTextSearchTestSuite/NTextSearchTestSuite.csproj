@@ -36,8 +36,17 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EngineTest.cs" />
     <Compile Include="FSTestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFile.cs" />
@@ -50,17 +59,16 @@
     <ProjectReference Include="..\NTextSearchInt\NTextSearchInt.csproj">
       <Project>{EAF232DB-45FF-4333-B446-24020F6855B7}</Project>
       <Name>NTextSearchInt</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\NTextSearchLib\NTextSearchLib.csproj">
       <Project>{D6182031-7753-4EF4-BD3E-039376C1B1B6}</Project>
       <Name>NTextSearchLib</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\NTextSearchTestPlugin\NTextSearchTestPlugin.csproj">
       <Project>{D7391FBF-83B5-4F0D-92BB-A670E6836D14}</Project>
       <Name>NTextSearchTestPlugin</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
