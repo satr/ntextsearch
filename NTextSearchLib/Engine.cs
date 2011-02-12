@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -39,13 +41,37 @@ namespace NTextSearch {
         }
 
         public void LoadPlugins(){
+            Plugins.Clear();
             var assemblyFolder = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
             var pluginsFolder = Path.Combine(assemblyFolder, PLUGINS_SUBFOLDER_NAME);
             var pluginsDirectoryInfo = new DirectoryInfo(pluginsFolder);
             if (!pluginsDirectoryInfo.Exists)
                 return;//TODO - log
-            var fileInfos = GetFilesInFolder(pluginsDirectoryInfo.FullName, "*.dll");
-            //TODO Assembly.Load()
+            try{
+                var fileInfos = GetFilesInFolder(pluginsDirectoryInfo.FullName, "*.dll");
+                foreach (var fileInfo in fileInfos){
+                    try{
+                        Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
+                        Type[] types = assembly.GetTypes();
+                        foreach (var type in types){
+                            var attributes = type.GetCustomAttributes(false).ToList();
+                            if(!attributes.Exists(at => at is TextSearchEngineAttribute))
+                                continue;
+                            var plugin = Activator.CreateInstance(type) as ITextSearch;
+                            if(plugin == null)
+                                continue;
+                            Plugins.Add(plugin);
+                        }
+                    }
+                    catch (BadImageFormatException ex){
+                        Console.WriteLine(ex);
+                        continue;//TODO - log
+                    }
+                }
+            }
+            catch (Exception ex){
+                Console.WriteLine(ex);//TODO - log
+            }
         }
     }
 }
