@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9AA82C90-ADA9-424D-A7E5-2D9C313879D7}</ProjectGuid>
+    <ProjectGuid>{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTextSearchTxtPlugin</RootNamespace>
-    <AssemblyName>NTextSearchTxtPlugin</AssemblyName>
+    <RootNamespace>NTextSearchXmlPlugin</RootNamespace>
+    <AssemblyName>NTextSearchXmlPlugin</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextSearchXmlEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextSearchTxtEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NTextSearchInt\NTextSearchInt.csproj">

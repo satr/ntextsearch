@@ -14,6 +14,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchInt", "NTextSearchInt\NTextSearchInt.csproj", "{EAF232DB-45FF-4333-B446-24020F6855B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchTxtPlugin", "NTextSearchTxtPlugin\NTextSearchTxtPlugin.csproj", "{9AA82C90-ADA9-424D-A7E5-2D9C313879D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D6182031-7753-4EF4-BD3E-039376C1B1B6} = {D6182031-7753-4EF4-BD3E-039376C1B1B6}
+		{7B7FCCC0-7724-4E04-A82A-7BD7A5589341} = {7B7FCCC0-7724-4E04-A82A-7BD7A5589341}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchXmlPlugin", "NTextSearchXmlPlugin\NTextSearchXmlPlugin.csproj", "{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D6182031-7753-4EF4-BD3E-039376C1B1B6} = {D6182031-7753-4EF4-BD3E-039376C1B1B6}
+		{7B7FCCC0-7724-4E04-A82A-7BD7A5589341} = {7B7FCCC0-7724-4E04-A82A-7BD7A5589341}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -40,6 +50,10 @@ Global
 		{9AA82C90-ADA9-424D-A7E5-2D9C313879D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AA82C90-ADA9-424D-A7E5-2D9C313879D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AA82C90-ADA9-424D-A7E5-2D9C313879D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
