@@ -46,9 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine.cs" />
-    <Compile Include="ITextSearchPlugin.cs" />
     <Compile Include="NullPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NTextSearchInt\NTextSearchInt.csproj">
+      <Project>{EAF232DB-45FF-4333-B446-24020F6855B7}</Project>
+      <Name>NTextSearchInt</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
