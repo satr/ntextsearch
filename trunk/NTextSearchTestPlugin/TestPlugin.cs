@@ -3,6 +3,10 @@ using NTextSearch;
 namespace NTextSearchTestPlugin{
     [TextSearchEngine]
     public class TestPlugin : ITextSearch {
+        public TestPlugin()
+            : this(FileExtentions.TST) {
+        }
+
         public TestPlugin(string fileExtention){
             FileExtention = fileExtention;
         }

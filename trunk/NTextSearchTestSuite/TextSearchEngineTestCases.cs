@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NTextSearch;
 using NTextSearchTestPlugin;
@@ -10,52 +8,18 @@ namespace NTextSearchTestSuite {
     /// Summary description for TextSearchEngineTestCases
     /// </summary>
     [TestClass]
-    public class TextSearchEngineTestCases {
-        private static FSTestHelper _fsTestHelper;
-        private static Engine _engine;
-        private static DirectoryInfo _testFolder;
-        private DirectoryInfo _testSubFolderLevel1;
-        private DirectoryInfo _testSubFolderLevel2;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
+    public class TextSearchEngineTestCases : AbstractTextSearchTestCases{
 
         #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize]
-        public static void MyClassInitialize(TestContext testContext) {
-            _fsTestHelper = new FSTestHelper();
-            _testFolder = _fsTestHelper.TestFolder;
-            _engine = new Engine();
+        public new static void MyClassInitialize(TestContext testContext) {
+            AbstractTextSearchTestCases.MyClassInitialize(testContext);
         }
 
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
         [ClassCleanup]
-        public static void MyClassCleanup() {
-            if (_fsTestHelper != null)
-                _fsTestHelper.Dispose();
+        public new static void MyClassCleanup() {
+            AbstractTextSearchTestCases.MyClassCleanup();
         }
-        //
-        // Use TestInitialize to run code before running each test 
-        [TestInitialize]
-        public void MyTestInitialize() {
-            _testSubFolderLevel1 = _fsTestHelper.CreateSubFolder();
-            _testSubFolderLevel2 = _fsTestHelper.CreateSubFolder(_testSubFolderLevel1.FullName);
-        }
-        //
-        // Use TestCleanup to run code after each test has run
-        [TestCleanup]
-        public void MyTestCleanup() {
-            _fsTestHelper.CleanTestFolder();
-        }
-        //
         #endregion
 
         [TestMethod]
@@ -89,6 +53,7 @@ namespace NTextSearchTestSuite {
         [TestMethod]
         public void TestFileExtList(){
             var fileExtentions = new List<string>();
+            _engine.Plugins.Clear();
             _engine.RegisterPlugin(new TestPlugin(FileExtentions.TXT));
             _engine.RegisterPlugin(new TestPlugin(FileExtentions.MP3));
             _engine.RegisterPlugin(new TestPlugin(FileExtentions.XML));
@@ -125,7 +90,5 @@ namespace NTextSearchTestSuite {
             _engine.LoadPlugins();
             Assert.IsTrue(_engine.Plugins.Count > 0);
         }
-
-
     }
 }
