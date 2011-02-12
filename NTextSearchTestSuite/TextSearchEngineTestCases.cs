@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NTextSearch;
+using NTextSearchTestPlugin;
 
 namespace NTextSearchTestSuite {
     /// <summary>
@@ -80,16 +81,16 @@ namespace NTextSearchTestSuite {
         [TestMethod]
         public void TestRegisterFileExtentions(){
             Assert.AreEqual(0, _engine.Plugins.Count);
-            _engine.RegisterPlugin(new MockPlugin(FileExtentions.TXT));
+            _engine.RegisterPlugin(new TestPlugin(FileExtentions.TXT));
             Assert.AreEqual(1, _engine.Plugins.Count);
         }
 
         [TestMethod]
         public void TestFileExtList(){
             var fileExtentions = new List<string>();
-            _engine.RegisterPlugin(new MockPlugin(FileExtentions.TXT));
-            _engine.RegisterPlugin(new MockPlugin(FileExtentions.MP3));
-            _engine.RegisterPlugin(new MockPlugin(FileExtentions.XML));
+            _engine.RegisterPlugin(new TestPlugin(FileExtentions.TXT));
+            _engine.RegisterPlugin(new TestPlugin(FileExtentions.MP3));
+            _engine.RegisterPlugin(new TestPlugin(FileExtentions.XML));
             foreach (var plugin in _engine.Plugins){
                 if(!fileExtentions.Contains(plugin.FileExtention))
                     fileExtentions.Add(plugin.FileExtention);
@@ -99,7 +100,7 @@ namespace NTextSearchTestSuite {
 
         [TestMethod]
         public void TestGetFilesByExtention() {
-            var pluginForTxt = new MockPlugin(FileExtentions.TXT);
+            var pluginForTxt = new TestPlugin(FileExtentions.TXT);
             _engine.RegisterPlugin(pluginForTxt);
             using (FSTestHelper.CreateFileTxt(_testFolder.FullName))
             using (FSTestHelper.CreateFileTxt(_testFolder.FullName))

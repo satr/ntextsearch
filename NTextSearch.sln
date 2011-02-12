@@ -25,6 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchXmlPlugin", "NTe
 		{7B7FCCC0-7724-4E04-A82A-7BD7A5589341} = {7B7FCCC0-7724-4E04-A82A-7BD7A5589341}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextSearchTestPlugin", "NTextSearchTestPlugin\NTextSearchTestPlugin.csproj", "{D7391FBF-83B5-4F0D-92BB-A670E6836D14}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D6182031-7753-4EF4-BD3E-039376C1B1B6} = {D6182031-7753-4EF4-BD3E-039376C1B1B6}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = NTextSearch.vsmdi
@@ -54,6 +59,10 @@ Global
 		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED8BE30D-4B8C-4CD6-A4A8-CA691A0E2EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7391FBF-83B5-4F0D-92BB-A670E6836D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7391FBF-83B5-4F0D-92BB-A670E6836D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7391FBF-83B5-4F0D-92BB-A670E6836D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7391FBF-83B5-4F0D-92BB-A670E6836D14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
