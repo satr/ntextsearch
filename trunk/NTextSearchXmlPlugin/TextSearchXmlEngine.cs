@@ -7,7 +7,7 @@ using NTextSearch;
 namespace NTextSearchXmlPlugin {
     [TextSearchEngine]
     public class TextSearchXmlEngine : ITextSearch {
-        public event TextSearchEventHandler OnTextFound;
+        public event TextSearchEventHandler OnNotify;
 
         public string FileExtention {
             get { return FileExtentions.XML; }

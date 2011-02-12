@@ -9,8 +9,11 @@ namespace TextSearchTestSuite
 {
     [TestClass()]
     public class TextSearchPluginsTestCases : AbstractTextSearchTestCases {
+        readonly string TEST_TEXT = Guid.NewGuid().ToString();
+        readonly string TEST_MISMATCH_TEXT = Guid.NewGuid().ToString();
+        readonly string EMPTY_TEXT = string.Empty;
         private TestPlugin _testPlugin;
-        private readonly List<string> _filesWithFoundText = new List<string>();
+        private readonly List<TextSearchEventArg> _textSearchEventArgs = new List<TextSearchEventArg>();
 
         #region Additional test attributes
         [ClassInitialize]
@@ -26,13 +29,13 @@ namespace TextSearchTestSuite
         [TestInitialize]
         public override void MyTestInitialize() {
             base.MyTestInitialize();
-            _filesWithFoundText.Clear();
+            _textSearchEventArgs.Clear();
             _testPlugin = new TestPlugin();
-            _testPlugin.OnTextFound += testPlugin_OnTextFound;
+            _testPlugin.OnNotify += testPlugin_OnTextFound;
         }
 
-        private void testPlugin_OnTextFound(string fileFullName){
-            _filesWithFoundText.Add(fileFullName);
+        private void testPlugin_OnTextFound(TextSearchEventArg args){
+            _textSearchEventArgs.Add(args);
         }
 
         [TestCleanup]
@@ -47,36 +50,34 @@ namespace TextSearchTestSuite
         [TestMethod]
         public void TestRegisterFileToProcess(){
             Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
-            using(var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)){
+            Assert.AreEqual(0, _textSearchEventArgs.Count);
+            using (var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)) {
                 _testPlugin.RegisterFileToProcess(file.FullName);
                 Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
+                Assert.AreEqual(1, _textSearchEventArgs.Count);
+                Assert.AreEqual(TextSearchStatus.TargetTextNotSpecified, _textSearchEventArgs[0].TextSearchStatus);
             }
         }
-
 
         [TestMethod]
         public void TestPerformPositiveTextSearch(){
-            Assert.AreEqual(0, _filesWithFoundText.Count);
-            using(var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)){
-                _testPlugin.RegisterFileToProcess(file.FullName);
-                Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
-                Assert.AreEqual(0, _filesWithFoundText.Count);
-                Assert.AreEqual(file.FullName, _testPlugin.PerformPositiveTestSearchInOneFile());
-                Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
-                Assert.AreEqual(1, _filesWithFoundText.Count);
-            }
+            PerformTextSearch(TEST_TEXT, TEST_TEXT, TextSearchStatus.TextFoundInFile);
         }
 
         [TestMethod]
-        public void TestPerformNegativeTextSearch(){
-            Assert.AreEqual(0, _filesWithFoundText.Count);
-            using(var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)){
+        public void TestPerformNegativeTextSearch() {
+            PerformTextSearch(TEST_MISMATCH_TEXT, TEST_TEXT, TextSearchStatus.TextNotFoundInFile);
+        }
+
+        private void PerformTextSearch(string targetText, string textInFile, TextSearchStatus expectedStatus) {
+            Assert.AreEqual(0, _textSearchEventArgs.Count);
+            using(var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName, textInFile)){
+                _testPlugin.TargetText = targetText;
                 _testPlugin.RegisterFileToProcess(file.FullName);
-                Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
-                Assert.AreEqual(0, _filesWithFoundText.Count);
-                Assert.AreEqual(file.FullName, _testPlugin.PerformNegativeTestSearchInOneFile());
+                Assert.AreEqual(file.FullName, _testPlugin.PerformSearch());
                 Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
-                Assert.AreEqual(0, _filesWithFoundText.Count);
+                Assert.AreEqual(1, _textSearchEventArgs.Count);
+                Assert.AreEqual(expectedStatus, _textSearchEventArgs[0].TextSearchStatus);
             }
         }
     }

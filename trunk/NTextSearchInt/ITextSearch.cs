@@ -3,6 +3,6 @@ namespace NTextSearch{
         string FileExtention { get; }
         string SearchPattern { get; }
         void Shutdown();
-        event TextSearchEventHandler OnTextFound;
+        event TextSearchEventHandler OnNotify;
     }
 }

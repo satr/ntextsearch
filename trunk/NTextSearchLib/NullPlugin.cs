@@ -1,6 +1,6 @@
 namespace NTextSearch{
     internal class NullPlugin : ITextSearch{
-        public event TextSearchEventHandler OnTextFound;
+        public event TextSearchEventHandler OnNotify;
         public string FileExtention {
             get { return string.Empty; }
         }
