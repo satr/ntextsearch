@@ -65,6 +65,7 @@
     <ProjectReference Include="..\NTextSearchLib\NTextSearchLib.csproj">
       <Project>{D6182031-7753-4EF4-BD3E-039376C1B1B6}</Project>
       <Name>NTextSearchLib</Name>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\NTextSearchTestPlugin\NTextSearchTestPlugin.csproj">
       <Project>{D7391FBF-83B5-4F0D-92BB-A670E6836D14}</Project>
