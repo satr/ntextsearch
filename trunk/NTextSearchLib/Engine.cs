@@ -84,6 +84,8 @@ namespace NTextSearch {
             }
         }
 
+        public ITextSearch CurrentPlugin { get; set; }
+
         private static void LogError(string message, string detailMessageFormat, params object[] args) {
             LogMessage("ERROR", message, detailMessageFormat, args);
         }
@@ -95,6 +97,10 @@ namespace NTextSearch {
         private static void LogMessage(string messageType, string message, string detailMessageFormat, object[] args){
             var detailMessage = string.Format(detailMessageFormat, args);
             Console.WriteLine(string.Format("{0}: {1}; DETAILS: {2}", messageType, message, detailMessage));//TODO
+        }
+
+        public void PerformSearch(string text){
+//            if(CurrentPlugin != null && CurrentPlugin.)//TODO
         }
     }
 }
