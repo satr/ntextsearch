@@ -1,5 +1,5 @@
 namespace NTextSearch{
-    internal class NullPlugin : ITextSearch{
+    public class NullPlugin : ITextSearch{
         public event TextSearchEventHandler OnNotify;
         public string FileExtention {
             get { return string.Empty; }
@@ -7,6 +7,10 @@ namespace NTextSearch{
 
         public string SearchPattern{
             get { return "*.*"; }
+        }
+
+        public string Title{
+            get { return string.Empty; }
         }
 
         public void Shutdown(){

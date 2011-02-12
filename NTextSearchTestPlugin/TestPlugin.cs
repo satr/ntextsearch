@@ -26,6 +26,10 @@ namespace NTextSearchTestPlugin{
             get { return string.Format("*.{0}", FileExtention); }
         }
 
+        public string Title{
+            get { return string.Format("Test plugin ({0})", SearchPattern); }
+        }
+
         public Queue<string> FilesToProcess { get; private set; }
 
         public string TargetText{

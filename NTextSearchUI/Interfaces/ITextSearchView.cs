@@ -1,0 +1,8 @@
+using System.Collections.Generic;
+
+namespace NTextSearch{
+    public interface ITextSearchView{
+        void Close();
+        void RefreshPlugins(List<ITextSearch> plugins);
+    }
+}

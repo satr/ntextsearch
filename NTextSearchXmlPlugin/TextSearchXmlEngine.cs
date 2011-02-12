@@ -17,6 +17,10 @@ namespace NTextSearchXmlPlugin {
             get { return string.Format("*.{0}", FileExtention); }
         }
 
+        public string Title{
+            get { return string.Format("XML files ({0})", SearchPattern); }
+        }
+
         public void Shutdown(){
         }
     }
