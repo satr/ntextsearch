@@ -8,6 +8,7 @@ namespace NTextSearchTestPlugin{
     public class TestPlugin : ITextSearch {
         public event TextSearchEventHandler OnNotify;
 
+        private string _targetText;
         private readonly object _sync = new object();
 
         public TestPlugin()
@@ -27,7 +28,20 @@ namespace NTextSearchTestPlugin{
 
         public Queue<string> FilesToProcess { get; private set; }
 
-        public string TargetText { get; set; }
+        public string TargetText{
+            get { return _targetText; }
+            set{
+                if (_targetText == value)
+                    return;
+                _targetText = value;
+                Reset();
+            }
+        }
+
+        private void Reset(){
+            //TODO request to reset/break
+            FilesToProcess.Clear();
+        }
 
         public void Shutdown(){
             
@@ -51,6 +65,7 @@ namespace NTextSearchTestPlugin{
                 return fileInfo.FullName;
             }
             using (var reader = new StreamReader(fileInfo.OpenRead())){
+                //TODO - check for requested break (or reset)
                 var textFromFile = reader.ReadToEnd();
                 if(textFromFile.Contains(TargetText?? string.Empty))//TODO
                     Notify(fileInfo, TextSearchStatus.TextFoundInFile);
