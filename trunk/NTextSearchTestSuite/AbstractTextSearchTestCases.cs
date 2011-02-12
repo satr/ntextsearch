@@ -5,7 +5,7 @@ using NTextSearch;
 namespace NTextSearchTestSuite{
     [TestClass]
     public abstract class AbstractTextSearchTestCases {
-        private static FSTestHelper _fsTestHelper;
+        protected static FSTestHelper _fsTestHelper;
         protected static Engine _engine;
         protected static DirectoryInfo _testFolder;
         protected DirectoryInfo _testSubFolderLevel1;
@@ -28,13 +28,13 @@ namespace NTextSearchTestSuite{
         }
 
         [TestInitialize]
-        public void MyTestInitialize() {
+        public virtual void MyTestInitialize() {
             _testSubFolderLevel1 = _fsTestHelper.CreateSubFolder();
             _testSubFolderLevel2 = _fsTestHelper.CreateSubFolder(_testSubFolderLevel1.FullName);
         }
 
         [TestCleanup]
-        public void MyTestCleanup() {
+        public virtual void MyTestCleanup() {
             _fsTestHelper.CleanTestFolder();
         }
         
