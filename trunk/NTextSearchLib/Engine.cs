@@ -100,7 +100,9 @@ namespace NTextSearch {
         }
 
         public void PerformSearch(string text){
-//            if(CurrentPlugin != null && CurrentPlugin.)//TODO
+            if (CurrentPlugin == null || string.IsNullOrEmpty(text))
+                return;//TODO - notify
+//            CurrentPlugin.
         }
     }
 }

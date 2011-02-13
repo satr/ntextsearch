@@ -5,7 +5,7 @@ using System.Text;
 using NTextSearch;
 
 namespace NTextSearchTestSuite{
-    public class FSTestHelper: IDisposable{
+    public class FSHelper: IDisposable{
         private DirectoryInfo _testFolder;
         private bool _disposed;
         private static readonly object _sync = new object();
@@ -36,7 +36,7 @@ namespace NTextSearchTestSuite{
         }
 
         public static TestFile CreateFileTst(string folderPath, string testText) {
-            return CreateFile(folderPath, FileExtentions.TST, testText, Encoding.ASCII.EncodingName);
+            return CreateFile(folderPath, FileExtentions.TEST, testText, Encoding.ASCII.EncodingName);
         }
 
         public static TestFile CreateFileTxt(string folderPath) {

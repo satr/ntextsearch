@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NTextSearch;
 using NTextSearchTestPlugin;
@@ -20,6 +21,14 @@ namespace NTextSearchTestSuite {
         public new static void MyClassCleanup() {
             AbstractTextSearchTestCases.MyClassCleanup();
         }
+
+        [TestInitialize]
+        public override void MyTestInitialize() {
+            _engine.LoadPlugins();
+            _testPlugin = (ITextSearch)_engine.Plugins.Find(pl => pl.FileExtention == FileExtentions.TEST);
+            base.MyTestInitialize();
+        }
+
         #endregion
 
         [TestMethod]
@@ -29,25 +38,25 @@ namespace NTextSearchTestSuite {
 
         [TestMethod]
         public void TestGetFilesFromNotEmptyFolder() {
-            using (FSTestHelper.CreateFileTxt(_testFolder.FullName)) {
+            using (FSHelper.CreateFileTxt(_testFolder.FullName)) {
                 Assert.IsTrue(0 < _engine.GetFilesInFolder(_testFolder.FullName, false, null).Length);
             }
         }
 
         [TestMethod]
         public void TestGetFilesFromFolderRecursive() {
-            using (FSTestHelper.CreateFileTxt(_testFolder.FullName))
-            using (FSTestHelper.CreateFileMp3(_testSubFolderLevel1.FullName))
-            using (FSTestHelper.CreateFileXml(_testSubFolderLevel2.FullName)) {
+            using (FSHelper.CreateFileTxt(_testFolder.FullName))
+            using (FSHelper.CreateFileMp3(_testSubFolderLevel1.FullName))
+            using (FSHelper.CreateFileXml(_testSubFolderLevel2.FullName)) {
                 Assert.AreEqual(3, _engine.GetFilesInFolder(_testFolder.FullName, true, null).Length);
             }
         }
 
         [TestMethod]
         public void TestRegisterFileExtentions(){
-            Assert.AreEqual(0, _engine.Plugins.Count);
+            var pluginsCount = _engine.Plugins.Count;
             _engine.RegisterPlugin(new TestPlugin(FileExtentions.TXT));
-            Assert.AreEqual(1, _engine.Plugins.Count);
+            Assert.AreEqual(pluginsCount + 1, _engine.Plugins.Count);
         }
 
         [TestMethod]
@@ -68,17 +77,17 @@ namespace NTextSearchTestSuite {
         public void TestGetFilesByExtention() {
             var pluginForTxt = new TestPlugin(FileExtentions.TXT);
             _engine.RegisterPlugin(pluginForTxt);
-            using (FSTestHelper.CreateFileTxt(_testFolder.FullName))
-            using (FSTestHelper.CreateFileTxt(_testFolder.FullName))
-            using (FSTestHelper.CreateFileTxt(_testFolder.FullName)){
+            using (FSHelper.CreateFileTxt(_testFolder.FullName))
+            using (FSHelper.CreateFileTxt(_testFolder.FullName))
+            using (FSHelper.CreateFileTxt(_testFolder.FullName)){
                 Assert.AreEqual(3, _engine.GetFilesInFolder(_testFolder.FullName, true, pluginForTxt).Length);
-                using (FSTestHelper.CreateFileMp3(_testSubFolderLevel1.FullName))
-                using (FSTestHelper.CreateFileMp3(_testSubFolderLevel1.FullName))
-                using (FSTestHelper.CreateFileMp3(_testSubFolderLevel1.FullName)){
+                using (FSHelper.CreateFileMp3(_testSubFolderLevel1.FullName))
+                using (FSHelper.CreateFileMp3(_testSubFolderLevel1.FullName))
+                using (FSHelper.CreateFileMp3(_testSubFolderLevel1.FullName)){
                     Assert.AreEqual(3, _engine.GetFilesInFolder(_testFolder.FullName, true, pluginForTxt).Length);
-                    using (FSTestHelper.CreateFileXml(_testSubFolderLevel2.FullName))
-                    using (FSTestHelper.CreateFileXml(_testSubFolderLevel2.FullName))
-                    using (FSTestHelper.CreateFileXml(_testSubFolderLevel2.FullName)){
+                    using (FSHelper.CreateFileXml(_testSubFolderLevel2.FullName))
+                    using (FSHelper.CreateFileXml(_testSubFolderLevel2.FullName))
+                    using (FSHelper.CreateFileXml(_testSubFolderLevel2.FullName)){
                         Assert.AreEqual(3, _engine.GetFilesInFolder(_testFolder.FullName, true, pluginForTxt).Length);
                     }
                 }
@@ -90,5 +99,27 @@ namespace NTextSearchTestSuite {
             _engine.LoadPlugins();
             Assert.IsTrue(_engine.Plugins.Count > 0);
         }
+
+        [TestMethod]
+        public void TestAttemptToPerformSearchWOCurrentPlugin(){
+            _engine.CurrentPlugin = null;
+            _engine.PerformSearch(TEST_TEXT);
+        }
+
+        [TestMethod]
+        public void TestAttemptToPerformSearchWithEmptyText() {
+            _engine.CurrentPlugin = _testPlugin;
+            _engine.PerformSearch(EMPTY_TEXT);
+        }
+
+        [TestMethod]
+        public void TestPerformSearch(){
+            _engine.CurrentPlugin = _testPlugin;
+            using(var file = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName, TEST_TEXT)){
+                _engine.PerformSearch(TEST_TEXT);
+
+            }
+        }
+
     }
 }
