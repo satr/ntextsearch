@@ -43,15 +43,15 @@
             this.columnHeaderFileName = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderTag = new System.Windows.Forms.ColumnHeader();
             this.panelTargetText = new System.Windows.Forms.Panel();
-            this.groupBoxTargetText = new System.Windows.Forms.GroupBox();
-            this.textBoxTargetText = new System.Windows.Forms.TextBox();
-            this.buttonSearch = new System.Windows.Forms.Button();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxFolderName = new System.Windows.Forms.GroupBox();
             this.checkBoxRecursive = new System.Windows.Forms.CheckBox();
             this.panelFolderName = new System.Windows.Forms.Panel();
             this.textBoxFolderName = new System.Windows.Forms.TextBox();
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
+            this.groupBoxTargetText = new System.Windows.Forms.GroupBox();
+            this.textBoxTargetText = new System.Windows.Forms.TextBox();
+            this.buttonSearch = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -61,9 +61,9 @@
             this.panelPlugin.SuspendLayout();
             this.groupBoxPlugins.SuspendLayout();
             this.panelTargetText.SuspendLayout();
-            this.groupBoxTargetText.SuspendLayout();
             this.groupBoxFolderName.SuspendLayout();
             this.panelFolderName.SuspendLayout();
+            this.groupBoxTargetText.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -85,7 +85,6 @@
             this.toolStripButtonExit.Name = "toolStripButtonExit";
             this.toolStripButtonExit.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonExit.Text = "Exit";
-            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
             // 
             // toolStripButtonRefreshPlugins
             // 
@@ -95,7 +94,6 @@
             this.toolStripButtonRefreshPlugins.Name = "toolStripButtonRefreshPlugins";
             this.toolStripButtonRefreshPlugins.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonRefreshPlugins.Text = "Refresh plugins";
-            this.toolStripButtonRefreshPlugins.Click += new System.EventHandler(this.toolStripButtonRefreshPlugins_Click);
             // 
             // statusStrip
             // 
@@ -125,9 +123,9 @@
             // 
             this.panelMain.Controls.Add(this.splitContainerMain);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 124);
+            this.panelMain.Location = new System.Drawing.Point(0, 128);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(695, 261);
+            this.panelMain.Size = new System.Drawing.Size(695, 257);
             this.panelMain.TabIndex = 3;
             // 
             // splitContainerMain
@@ -144,7 +142,7 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.listView);
-            this.splitContainerMain.Size = new System.Drawing.Size(695, 261);
+            this.splitContainerMain.Size = new System.Drawing.Size(695, 257);
             this.splitContainerMain.SplitterDistance = 231;
             this.splitContainerMain.TabIndex = 0;
             // 
@@ -153,7 +151,7 @@
             this.groupBoxPluginProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxPluginProperties.Location = new System.Drawing.Point(0, 42);
             this.groupBoxPluginProperties.Name = "groupBoxPluginProperties";
-            this.groupBoxPluginProperties.Size = new System.Drawing.Size(231, 219);
+            this.groupBoxPluginProperties.Size = new System.Drawing.Size(231, 215);
             this.groupBoxPluginProperties.TabIndex = 1;
             this.groupBoxPluginProperties.TabStop = false;
             this.groupBoxPluginProperties.Text = "Search conditions";
@@ -190,7 +188,6 @@
             this.comboBoxPlugins.Size = new System.Drawing.Size(200, 21);
             this.comboBoxPlugins.TabIndex = 4;
             this.toolTip.SetToolTip(this.comboBoxPlugins, "Select file type");
-            this.comboBoxPlugins.SelectedIndexChanged += new System.EventHandler(this.comboBoxPlugins_SelectedIndexChanged);
             // 
             // buttonRefreshPlugins
             // 
@@ -203,7 +200,6 @@
             this.buttonRefreshPlugins.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolTip.SetToolTip(this.buttonRefreshPlugins, "Refresh plugins");
             this.buttonRefreshPlugins.UseVisualStyleBackColor = true;
-            this.buttonRefreshPlugins.Click += new System.EventHandler(this.buttonRefreshPlugins_Click);
             // 
             // listView
             // 
@@ -217,7 +213,7 @@
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.Name = "listView";
             this.listView.ShowItemToolTips = true;
-            this.listView.Size = new System.Drawing.Size(460, 261);
+            this.listView.Size = new System.Drawing.Size(460, 257);
             this.listView.TabIndex = 0;
             this.toolTip.SetToolTip(this.listView, "Move cursor above status to see details");
             this.listView.UseCompatibleStateImageBehavior = false;
@@ -245,40 +241,8 @@
             this.panelTargetText.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTargetText.Location = new System.Drawing.Point(0, 25);
             this.panelTargetText.Name = "panelTargetText";
-            this.panelTargetText.Size = new System.Drawing.Size(695, 99);
+            this.panelTargetText.Size = new System.Drawing.Size(695, 103);
             this.panelTargetText.TabIndex = 1;
-            // 
-            // groupBoxTargetText
-            // 
-            this.groupBoxTargetText.Controls.Add(this.textBoxTargetText);
-            this.groupBoxTargetText.Controls.Add(this.buttonSearch);
-            this.groupBoxTargetText.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBoxTargetText.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxTargetText.Name = "groupBoxTargetText";
-            this.groupBoxTargetText.Size = new System.Drawing.Size(695, 41);
-            this.groupBoxTargetText.TabIndex = 4;
-            this.groupBoxTargetText.TabStop = false;
-            this.groupBoxTargetText.Text = "Target text";
-            // 
-            // textBoxTargetText
-            // 
-            this.textBoxTargetText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxTargetText.Location = new System.Drawing.Point(3, 16);
-            this.textBoxTargetText.Name = "textBoxTargetText";
-            this.textBoxTargetText.Size = new System.Drawing.Size(614, 20);
-            this.textBoxTargetText.TabIndex = 7;
-            this.toolTip.SetToolTip(this.textBoxTargetText, "Type text to search");
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonSearch.Location = new System.Drawing.Point(617, 16);
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(75, 22);
-            this.buttonSearch.TabIndex = 6;
-            this.buttonSearch.Text = "Search";
-            this.buttonSearch.UseVisualStyleBackColor = true;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // groupBoxFolderName
             // 
@@ -332,7 +296,37 @@
             this.buttonBrowseFolder.TabIndex = 0;
             this.buttonBrowseFolder.Text = "Browse";
             this.buttonBrowseFolder.UseVisualStyleBackColor = true;
-            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
+            // 
+            // groupBoxTargetText
+            // 
+            this.groupBoxTargetText.Controls.Add(this.textBoxTargetText);
+            this.groupBoxTargetText.Controls.Add(this.buttonSearch);
+            this.groupBoxTargetText.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxTargetText.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxTargetText.Name = "groupBoxTargetText";
+            this.groupBoxTargetText.Size = new System.Drawing.Size(695, 41);
+            this.groupBoxTargetText.TabIndex = 4;
+            this.groupBoxTargetText.TabStop = false;
+            this.groupBoxTargetText.Text = "Target text";
+            // 
+            // textBoxTargetText
+            // 
+            this.textBoxTargetText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxTargetText.Location = new System.Drawing.Point(3, 16);
+            this.textBoxTargetText.Name = "textBoxTargetText";
+            this.textBoxTargetText.Size = new System.Drawing.Size(614, 20);
+            this.textBoxTargetText.TabIndex = 7;
+            this.toolTip.SetToolTip(this.textBoxTargetText, "Type text to search");
+            // 
+            // buttonSearch
+            // 
+            this.buttonSearch.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonSearch.Location = new System.Drawing.Point(617, 16);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(75, 22);
+            this.buttonSearch.TabIndex = 6;
+            this.buttonSearch.Text = "Search";
+            this.buttonSearch.UseVisualStyleBackColor = true;
             // 
             // NTextSearchView
             // 
@@ -357,12 +351,12 @@
             this.panelPlugin.ResumeLayout(false);
             this.groupBoxPlugins.ResumeLayout(false);
             this.panelTargetText.ResumeLayout(false);
-            this.groupBoxTargetText.ResumeLayout(false);
-            this.groupBoxTargetText.PerformLayout();
             this.groupBoxFolderName.ResumeLayout(false);
             this.groupBoxFolderName.PerformLayout();
             this.panelFolderName.ResumeLayout(false);
             this.panelFolderName.PerformLayout();
+            this.groupBoxTargetText.ResumeLayout(false);
+            this.groupBoxTargetText.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
