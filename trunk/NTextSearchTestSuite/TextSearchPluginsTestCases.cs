@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using NTextSearch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NTextSearchTestPlugin;
@@ -79,7 +80,12 @@ namespace TextSearchTestSuite {
                     Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
                 }
             }
+        }
 
+        [TestMethod]
+        public void TestSplitString(){
+            string[] lines = Regex.Split("123 456..-789-098/765+432\r\n123", @"[^\w]");
+            Assert.IsTrue(lines.Length > 6);
         }
     }
 }

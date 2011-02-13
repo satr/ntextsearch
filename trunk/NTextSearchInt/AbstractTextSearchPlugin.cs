@@ -11,11 +11,14 @@ namespace NTextSearch{
 
         protected AbstractTextSearchPlugin(){
             FilesToProcess = new Queue<string>();
+            MatchWholeWord = false;
         }
 
         public virtual event TextSearchEventHandler OnNotify;
-        
-        public abstract string FileExtention { get;}
+
+        protected bool MatchWholeWord { get; set; }
+
+        public abstract string FileExtention { get; }
 
         public virtual string SearchPattern{
             get { return string.Format("*.{0}", FileExtention); }
@@ -74,7 +77,7 @@ namespace NTextSearch{
             using (var reader = new StreamReader(fileInfo.OpenRead())) {
                 //TODO - check for requested break (or reset)
                 var textFromFile = reader.ReadToEnd();
-                if (textFromFile.Contains(TargetText ?? string.Empty))//TODO
+                if (ValidateTextExistsIn(textFromFile))//TODO
                     Notify(fileInfo, TextSearchStatus.TextFoundInFile);
                 else
                     Notify(fileInfo, TextSearchStatus.TextNotFoundInFile);
@@ -92,6 +95,16 @@ namespace NTextSearch{
         protected void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus, string format, params object[] args){
             if (OnNotify != null)
                 OnNotify(new TextSearchEventArg(fileInfo.FullName, textSearchStatus, format, args));
+        }
+
+        protected bool ValidateTextExistsIn(string value){
+            if (string.IsNullOrEmpty(value))
+                return false;
+            if ((MatchWholeWord && value.Contains(TargetText))
+                || value.Contains(TargetText)) {//TODO - rework as strategy with comparers
+                return true;
+            }
+            return false;
         }
     }
 }
