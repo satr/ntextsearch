@@ -62,6 +62,10 @@ namespace NTextSearch{
             checkBoxFileDateToEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesDate();
             dateTimePickerFrom.ValueChanged += (s, e) => RefreshFilePropertiesDate();
             dateTimePickerTo.ValueChanged += (s, e) => RefreshFilePropertiesDate();
+            checkBoxFileSizeMinEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesSize();
+            checkBoxFileSizeMaxEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesSize();
+            numericUpDownFileSizeMin.ValueChanged += (s, e) => RefreshFilePropertiesSize();
+            numericUpDownFileSizeMax.ValueChanged += (s, e) => RefreshFilePropertiesSize();
             _fileAttributesControls.ForEach(cb => cb.CheckedChanged += (s,e)=>RefreshFileAttributes());
         }
 
@@ -83,6 +87,13 @@ namespace NTextSearch{
             dateTimePickerTo.Enabled = checkBoxFileDateToEnabled.Checked;
             Presenter.SetFilePropertyDate(GetFilePropertyDateBy(checkBoxFileDateFromEnabled, dateTimePickerFrom),
                                           GetFilePropertyDateBy(checkBoxFileDateToEnabled, dateTimePickerTo));
+        }
+
+        private void RefreshFilePropertiesSize(){
+            numericUpDownFileSizeMin.Enabled = checkBoxFileSizeMinEnabled.Checked;
+            numericUpDownFileSizeMax.Enabled = checkBoxFileSizeMaxEnabled.Checked;
+            Presenter.SetFilePropertySize(GetFilePropertySizeBy(checkBoxFileSizeMinEnabled, numericUpDownFileSizeMin),
+                                          GetFilePropertySizeBy(checkBoxFileSizeMaxEnabled, numericUpDownFileSizeMax));
         }
 
         private void RefreshRecusiveSearch(){
@@ -129,8 +140,13 @@ namespace NTextSearch{
             return checkBox.Checked ? dateTimePicker.Value : (DateTime?)null;
         }
 
+        private static long? GetFilePropertySizeBy(CheckBox checkBox, NumericUpDown numericUpDown) {
+            return checkBox.Checked ? Convert.ToInt32(numericUpDown.Value * 1000000) : (long?)null; //means 1MB = 1.000.000 bytes
+        }
+
         private void ClearFileProperties() {
             checkBoxFileDateFromEnabled.Checked = checkBoxFileDateToEnabled.Checked = false;
+            checkBoxFileSizeMinEnabled.Checked = checkBoxFileSizeMaxEnabled.Checked = false;
             _fileAttributesControls.ForEach(cb => cb.CheckState = CheckState.Indeterminate);
         }
     }
