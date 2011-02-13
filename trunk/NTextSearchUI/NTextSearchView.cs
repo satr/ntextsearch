@@ -46,7 +46,7 @@ namespace NTextSearch{
                                                             checkBoxFileAttributeHidden,
                                                             checkBoxFileAttributeSystem
                                                         };
-            ClearFileAttributes();
+            ClearFileProperties();
         }
 
         private void Bind(){
@@ -57,8 +57,7 @@ namespace NTextSearch{
             buttonBrowseFolder.Click += (s, e) => SelectFolder();
             buttonSearch.Click += (s, e) => Presenter.PerformSearch(textBoxTargetText.Text);
             checkBoxRecursive.CheckedChanged += (s, e) => RefreshRecusiveSearch();
-            buttonClearFileAttributes.Click += (s, e) => ClearFileAttributes();
-            buttonFileDateClear.Click += (s, e) => DisableFilePropertiesDate();
+            buttonClearFileAttributes.Click += (s, e) => ClearFileProperties();
             checkBoxFileDateFromEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesDate();
             checkBoxFileDateToEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesDate();
             dateTimePickerFrom.ValueChanged += (s, e) => RefreshFilePropertiesDate();
@@ -122,10 +121,6 @@ namespace NTextSearch{
             Presenter.FolderName = textBoxFolderName.Text = _folderBrowserDialog.SelectedPath;
         }
 
-        private void DisableFilePropertiesDate(){
-            checkBoxFileDateFromEnabled.Checked = checkBoxFileDateToEnabled.Checked = false;
-        }
-
         private static bool? GetFileAttributeValue(CheckBox checkBox) {
             return checkBox.CheckState == CheckState.Indeterminate ? (bool?)null : checkBox.Checked;
         }
@@ -134,7 +129,8 @@ namespace NTextSearch{
             return checkBox.Checked ? dateTimePicker.Value : (DateTime?)null;
         }
 
-        private void ClearFileAttributes() {
+        private void ClearFileProperties() {
+            checkBoxFileDateFromEnabled.Checked = checkBoxFileDateToEnabled.Checked = false;
             _fileAttributesControls.ForEach(cb => cb.CheckState = CheckState.Indeterminate);
         }
     }
