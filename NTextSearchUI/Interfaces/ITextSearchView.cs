@@ -6,6 +6,6 @@ namespace NTextSearch{
         void RefreshPlugins(List<ITextSearch> plugins);
         void SetStatus(string message);
         void ClearList();
-        void RefreshPluginProperties();
+        void RefreshPluginProperties(List<PluginProperty> pluginProperties);
     }
 }

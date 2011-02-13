@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using NTextSearch;
 /*
  This class is an optional implementation: does not require to inherid it, interface ISearchText is enough
@@ -8,15 +10,28 @@ namespace NTextSearch{
     public abstract class AbstractTextSearchPlugin : ITextSearch{
         private string _targetText;
         private readonly object _sync = new object();
+        private readonly Guid _matchWholeWordPropertyId;
 
         protected AbstractTextSearchPlugin(){
+            Properties = new List<PluginProperty>();
             FilesToProcess = new Queue<string>();
-            MatchWholeWord = false;
+            _matchWholeWordPropertyId = AddBooleanProperty(false, "Match whole word");
         }
 
         public virtual event TextSearchEventHandler OnNotify;
 
-        protected bool MatchWholeWord { get; set; }
+        protected bool MatchWholeWord{
+            get{
+                return (bool)GetProperty(_matchWholeWordPropertyId).Value;
+            }
+        }
+
+        protected PluginProperty GetProperty(Guid propertyId){
+            var pluginProperty = Properties.Find(pr => pr.Id == propertyId);
+            if (pluginProperty == null)
+                throw new InvalidOperationException(string.Format("Property not found by Id {0}", propertyId));
+            return pluginProperty;
+        }
 
         public abstract string FileExtention { get; }
 
@@ -73,6 +88,8 @@ namespace NTextSearch{
             PerformSearchIn(fileInfo);
         }
 
+        public List<PluginProperty> Properties{ get; private set;}
+
         protected virtual void PerformSearchIn(FileInfo fileInfo){
             using (var reader = new StreamReader(fileInfo.OpenRead())) {
                 //TODO - check for requested break (or reset)
@@ -100,11 +117,17 @@ namespace NTextSearch{
         protected bool ValidateTextExistsIn(string value){
             if (string.IsNullOrEmpty(value))
                 return false;
-            if ((MatchWholeWord && value.Contains(TargetText))
-                || value.Contains(TargetText)) {//TODO - rework as strategy with comparers
+            if ((value.Equals(TargetText))
+                || (!MatchWholeWord && value.Contains(TargetText))) {//TODO - rework as strategy with comparers
                 return true;
             }
             return false;
+        }
+
+        protected Guid AddBooleanProperty(bool value, string title){
+            var pluginProperty = new PluginProperty(PluginPropertyType.Boolean, value, title);
+            Properties.Add(pluginProperty);
+            return pluginProperty.Id;
         }
     }
 }
