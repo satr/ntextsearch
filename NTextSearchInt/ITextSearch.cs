@@ -10,6 +10,6 @@ namespace NTextSearch{
         void Shutdown();
         event TextSearchEventHandler OnNotify;
         void RegisterFileToProcess(string fileFullName);
-        string PerformSearch();
+        void PerformSearch();
     }
 }

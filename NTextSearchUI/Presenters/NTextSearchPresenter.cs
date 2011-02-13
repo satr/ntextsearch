@@ -12,6 +12,7 @@ namespace NTextSearch {
 
         private readonly Engine _engine;
         private readonly Dictionary<TextSearchStatus, AbstractNotificationHandler> _notificationHandlers;
+        private string folderName;
         public ITextSearchView View { get; set; }
 
         public NTextSearchPresenter(ITextSearchView view){
@@ -66,7 +67,7 @@ namespace NTextSearch {
         }
 
         public void PerformSearch(string text){
-            _engine.PerformSearch(text);
+            _engine.PerformSearch(folderName, text);
         }
 
         public void AddListItem(string status, string fileName) {
