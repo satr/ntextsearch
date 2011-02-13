@@ -55,10 +55,20 @@ namespace NTextSearchTestSuite{
             var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(Path.GetTempFileName());
             var fileInfo = new FileInfo(Path.Combine(folderPath, GetFileName(fileNameWithoutExtension, extention)));
             using (var fileStream = fileInfo.Create()){
-                var bytes = Encoding.GetEncoding(encodingName).GetBytes(testText);//TODO - add encoding
-                fileStream.Write(bytes, 0, bytes.Length);
+                Write(CreateRandomString(), fileStream, encodingName);
+                Write(testText, fileStream, encodingName);
+                Write(CreateRandomString(), fileStream, encodingName);
             }
             return new TestFile(fileInfo);
+        }
+
+        private static string CreateRandomString(){
+            return Guid.NewGuid().ToString();
+        }
+
+        private static void Write(string testText, FileStream fileStream, string encodingName){
+            var bytes = Encoding.GetEncoding(encodingName).GetBytes(testText);//TODO - add encoding
+            fileStream.Write(bytes, 0, bytes.Length);
         }
 
         private static string GetFileName(string fileNameWithoutExtension, string extention) {

@@ -4,7 +4,7 @@ namespace NTextSearch{
         }
 
         public override void Perform(TextSearchEventArg arg){
-            Presenter.AddListItem("Error", arg.FullFileName, arg.Message);
+            AddListItem("Error", arg);
         }
     }
 }
