@@ -14,7 +14,7 @@ namespace NTextSearch{
             InitializeComponent();
             InitPresenter();
             InitFolderBrowser();
-            InitFileProperties();
+            InitFilePropertiesDate();
             InitFileAttributes();
             Bind();
             SetStatus(string.Empty);
@@ -35,8 +35,8 @@ namespace NTextSearch{
             SetFolderName();
         }
 
-        private void InitFileProperties() {
-            dateTimePickerFrom.Value = dateTimePickerTo.Value = DateTime.Now;
+        private void InitFilePropertiesDate() {
+            dateTimePickerFrom.Value = dateTimePickerTo.Value = DateTime.Now.Date;
         }
 
         private void InitFileAttributes() {

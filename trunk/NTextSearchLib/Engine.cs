@@ -6,21 +6,8 @@ using System.Reflection;
 
 namespace NTextSearch {
     public class Engine {
-        private struct FileAttributes{
-            public bool? IsReadOnly;
-            public bool? IsArchive;
-            public bool? IsHidden;
-            public bool? IsSystem;
-
-            public FileAttributes(bool? isReadOnly, bool? isArchive, bool? isHidden, bool? isSystem){
-                IsReadOnly = isReadOnly;
-                IsArchive = isArchive;
-                IsHidden = isHidden;
-                IsSystem = isSystem;
-            }
-        }
         const string PLUGINS_SUBFOLDER_NAME = "plugins";
-        private FileAttributes _fileAttributes = new FileAttributes();
+        private FileAttributes _fileAttributes;
         private DateTime? _filePropertyDateFrom;
         private DateTime? _filePropertyDateTo;
 
@@ -28,15 +15,37 @@ namespace NTextSearch {
             Plugins = new List<ITextSearch>();
         }
 
-        private static FileInfo[] GetFilesInFolder(string folderPath, ITextSearch plugin){
+        private FileInfo[] GetFilesInFolder(string folderPath, ITextSearch plugin){
             return GetFilesInFolder(folderPath, plugin.SearchPattern);
         }
 
-        private static FileInfo[] GetFilesInFolder(string folderPath, string searchPattern){
+        private FileInfo[] GetFilesInFolder(string folderPath, string searchPattern){
             var directoryInfo = new DirectoryInfo(folderPath);
-            return directoryInfo.Exists 
-                       ? directoryInfo.GetFiles(searchPattern) 
-                       : new FileInfo[0];
+            if (!directoryInfo.Exists) 
+                return new FileInfo[0];
+            var fileInfos = directoryInfo.GetFiles(searchPattern);
+            var validFiles = new List<FileInfo>();
+            foreach (var fileInfo in fileInfos){
+                var attributes = fileInfo.Attributes;
+                if (ValidateFileAttribute(_fileAttributes.ReadOnly, System.IO.FileAttributes.ReadOnly, attributes)
+                    && ValidateFileAttribute(_fileAttributes.Archive, System.IO.FileAttributes.Archive, attributes)
+                    && ValidateFileAttribute(_fileAttributes.Hidden, System.IO.FileAttributes.Hidden, attributes)
+                    && ValidateFileAttribute(_fileAttributes.System, System.IO.FileAttributes.System, attributes)
+                    && ValidateFilePropertyDate(_filePropertyDateFrom, _filePropertyDateTo, fileInfo))
+                    validFiles.Add(fileInfo);
+            }
+            return validFiles.ToArray();
+        }
+
+        private static bool ValidateFilePropertyDate(DateTime? propertyDateFrom, DateTime? propertyDateTo, FileSystemInfo fileInfo){
+            bool conditionFromIsValid = (!propertyDateFrom.HasValue || propertyDateFrom.Value <= fileInfo.CreationTime);
+            bool conditionToIsValid = (!propertyDateTo.HasValue || propertyDateTo.Value >= fileInfo.CreationTime);
+            return conditionFromIsValid && conditionToIsValid;
+        }
+
+        private static bool ValidateFileAttribute(bool? conditionValue, System.IO.FileAttributes attribute, System.IO.FileAttributes attributes){
+            bool hasAttribute = (attributes & attribute) > 0;
+            return !conditionValue.HasValue || !(conditionValue.Value ^ hasAttribute);
         }
 
         public FileInfo[] GetFilesInFolder(string folderPath, bool recursive, ITextSearch plugin){
@@ -150,5 +159,22 @@ namespace NTextSearch {
             _filePropertyDateFrom = dateFrom;
             _filePropertyDateTo = dateTo;
         }
+
+        #region Inner classes and structs
+
+        private struct FileAttributes {
+            public readonly bool? ReadOnly;
+            public readonly bool? Archive;
+            public readonly bool? Hidden;
+            public readonly bool? System;
+
+            public FileAttributes(bool? isReadOnly, bool? isArchive, bool? isHidden, bool? isSystem) {
+                ReadOnly = isReadOnly;
+                Archive = isArchive;
+                Hidden = isHidden;
+                System = isSystem;
+            }
+        }
+        #endregion
     }
 }
