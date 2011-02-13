@@ -1,28 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NTextSearch;
+﻿using NTextSearch;
 
 namespace NTextSearchTxtPlugin {
     [TextSearchEngine]
-    public class TextSearchTxtEngine: ITextSearch {
-        public event TextSearchEventHandler OnNotify;
-
-        public string FileExtention {
+    public class TextSearchTxtEngine : AbstractTextSearchPlugin {
+        public override string FileExtention {
             get { return FileExtentions.TXT; }
         }
 
-        public string SearchPattern{
-            get { return string.Format("*.{0}", FileExtention); }
-        }
-
-        public string Title{
-            get { return string.Format("Text files ({0})", SearchPattern); }
-        }
-
-        public void Shutdown(){
-            
+        protected override string InnerTitle{
+            get { return "Text files"; }
         }
     }
 }

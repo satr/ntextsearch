@@ -8,12 +8,6 @@ using NTextSearchTestSuite;
 namespace TextSearchTestSuite {
     [TestClass()]
     public class TextSearchPluginsTestCases : AbstractTextSearchTestCases {
-        readonly string TEST_TEXT = Guid.NewGuid().ToString();
-        readonly string MISMATCH_TEST_TEXT = Guid.NewGuid().ToString();
-        readonly string EMPTY_TEXT = string.Empty;
-        private TestPlugin _testPlugin;
-        private readonly List<TextSearchEventArg> _textSearchEventArgs = new List<TextSearchEventArg>();
-
         #region Additional test attributes
         [ClassInitialize]
         public new static void MyClassInitialize(TestContext testContext) {
@@ -27,21 +21,8 @@ namespace TextSearchTestSuite {
 
         [TestInitialize]
         public override void MyTestInitialize() {
-            base.MyTestInitialize();
-            _textSearchEventArgs.Clear();
             _testPlugin = new TestPlugin();
-            _testPlugin.OnNotify += testPlugin_OnTextFound;
-        }
-
-        private void testPlugin_OnTextFound(TextSearchEventArg args) {
-            _textSearchEventArgs.Add(args);
-        }
-
-        [TestCleanup]
-        public override void MyTestCleanup() {
-            base.MyTestCleanup();
-            if (_testPlugin != null)
-                _testPlugin.Shutdown();
+            base.MyTestInitialize();
         }
 
         #endregion
@@ -50,7 +31,7 @@ namespace TextSearchTestSuite {
         public void TestRegisterFileToProcess() {
             Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
             Assert.AreEqual(0, _textSearchEventArgs.Count);
-            using (var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)) {
+            using (var file = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName)) {
                 _testPlugin.RegisterFileToProcess(file.FullName);
                 Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
                 Assert.AreEqual(1, _textSearchEventArgs.Count);
@@ -70,7 +51,7 @@ namespace TextSearchTestSuite {
 
         private void PerformTextSearch(string targetText, string textInFile, TextSearchStatus expectedStatus) {
             Assert.AreEqual(0, _textSearchEventArgs.Count);
-            using (var file = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName, textInFile)) {
+            using (var file = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName, textInFile)) {
                 _testPlugin.TargetText = targetText;
                 _testPlugin.RegisterFileToProcess(file.FullName);
                 Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
@@ -86,8 +67,8 @@ namespace TextSearchTestSuite {
 
         [TestMethod]
         public void TestRegisterSeveralFilesAndResetByNewSearch() {
-            using (var file1 = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)) {
-                using (var file2 = FSTestHelper.CreateFileTst(_fsTestHelper.TestFolder.FullName)) {
+            using (var file1 = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName)) {
+                using (var file2 = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName)) {
                     _testPlugin.TargetText = TEST_TEXT;
                     _testPlugin.RegisterFileToProcess(file1.FullName);
                     _testPlugin.RegisterFileToProcess(file2.FullName);

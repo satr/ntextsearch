@@ -1,19 +1,11 @@
 namespace NTextSearch{
-    public class NullPlugin : ITextSearch{
-        public event TextSearchEventHandler OnNotify;
-        public string FileExtention {
+    public class NullPlugin : AbstractTextSearchPlugin {
+        public override string FileExtention {
             get { return string.Empty; }
         }
 
-        public string SearchPattern{
+        public override string SearchPattern{
             get { return "*.*"; }
         }
-
-        public string Title{
-            get { return string.Empty; }
-        }
-
-        public void Shutdown(){
-        }
-    }
+   }
 }

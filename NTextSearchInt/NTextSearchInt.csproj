@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractTextSearchPlugin.cs" />
     <Compile Include="FileExtentions.cs" />
     <Compile Include="ITextSearch.cs" />
     <Compile Include="CustomDelegates.cs" />
