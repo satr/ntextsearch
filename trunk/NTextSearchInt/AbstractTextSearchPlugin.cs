@@ -59,16 +59,15 @@ namespace NTextSearch{
                 Notify(fileFullName, TextSearchStatus.TargetTextNotSpecified);
         }
 
-        public string PerformSearch(){
+        public void PerformSearch(){
             if (FilesToProcess.Count == 0)
-                return null;
+                return;
             var fileInfo = new FileInfo(FilesToProcess.Dequeue());
             if(!fileInfo.Exists){
                 Notify(fileInfo, TextSearchStatus.FileNotFound);
-                return fileInfo.FullName;
+                return;
             }
             PerformSearchIn(fileInfo);
-            return fileInfo.FullName;
         }
 
         protected virtual void PerformSearchIn(FileInfo fileInfo){

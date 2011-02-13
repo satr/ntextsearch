@@ -99,10 +99,30 @@ namespace NTextSearch {
             Console.WriteLine(string.Format("{0}: {1}; DETAILS: {2}", messageType, message, detailMessage));//TODO
         }
 
-        public void PerformSearch(string text){
-            if (CurrentPlugin == null || string.IsNullOrEmpty(text))
-                return;//TODO - notify
-//            CurrentPlugin.
+        public void PerformSearch(string folderName, string text){
+            if (!ValidateSearchAvailable(text))
+                return;
+            CurrentPlugin.TargetText = text;
+            foreach (var fileInfo in GetFilesInFolder(folderName, Recursive, CurrentPlugin)){
+                CurrentPlugin.RegisterFileToProcess(fileInfo.FullName);
+                CurrentPlugin.PerformSearch();
+            }
+            //TODO - notify about search process completion
+        }
+
+        public bool Recursive { get; set; }
+
+        private bool ValidateSearchAvailable(string text){
+            var errorMessage = "Text search is is not available";
+            if (CurrentPlugin == null){
+                LogError(errorMessage, "File type (supported by plugins) is not specified");
+                return false;
+            }
+            if (string.IsNullOrEmpty(text)){
+                LogError(errorMessage, "Text to search is not specified");
+                return false;
+            }
+            return true;
         }
     }
 }
