@@ -10,6 +10,8 @@ namespace NTextSearch {
         private FileAttributes _fileAttributes;
         private DateTime? _filePropertyDateFrom;
         private DateTime? _filePropertyDateTo;
+        private long? _filePropertySizeMin;
+        private long? _filePropertySizeMax;
 
         public Engine() {
             Plugins = new List<ITextSearch>();
@@ -31,15 +33,22 @@ namespace NTextSearch {
                     && ValidateFileAttribute(_fileAttributes.Archive, System.IO.FileAttributes.Archive, attributes)
                     && ValidateFileAttribute(_fileAttributes.Hidden, System.IO.FileAttributes.Hidden, attributes)
                     && ValidateFileAttribute(_fileAttributes.System, System.IO.FileAttributes.System, attributes)
-                    && ValidateFilePropertyDate(_filePropertyDateFrom, _filePropertyDateTo, fileInfo))
+                    && ValidateFilePropertyDate(fileInfo)
+                    && ValidateFilePropertySize(fileInfo))
                     validFiles.Add(fileInfo);
             }
             return validFiles.ToArray();
         }
 
-        private static bool ValidateFilePropertyDate(DateTime? propertyDateFrom, DateTime? propertyDateTo, FileSystemInfo fileInfo){
-            bool conditionFromIsValid = (!propertyDateFrom.HasValue || propertyDateFrom.Value <= fileInfo.CreationTime);
-            bool conditionToIsValid = (!propertyDateTo.HasValue || propertyDateTo.Value >= fileInfo.CreationTime);
+        private bool ValidateFilePropertyDate(FileSystemInfo fileInfo){
+            bool conditionFromIsValid = (!_filePropertyDateFrom.HasValue || _filePropertyDateFrom.Value <= fileInfo.CreationTime);
+            bool conditionToIsValid = (!_filePropertyDateTo.HasValue || _filePropertyDateTo.Value >= fileInfo.CreationTime);
+            return conditionFromIsValid && conditionToIsValid;
+        }
+
+        private bool ValidateFilePropertySize(FileInfo fileInfo) {
+            bool conditionFromIsValid = (!_filePropertySizeMin.HasValue || _filePropertySizeMin.Value <= fileInfo.Length);
+            bool conditionToIsValid = (!_filePropertySizeMax.HasValue || _filePropertySizeMax.Value >= fileInfo.Length);
             return conditionFromIsValid && conditionToIsValid;
         }
 
@@ -158,6 +167,11 @@ namespace NTextSearch {
         public void SetFilePropertyDate(DateTime? dateFrom, DateTime? dateTo){
             _filePropertyDateFrom = dateFrom;
             _filePropertyDateTo = dateTo;
+        }
+
+        public void SetFilePropertySize(long? fileSizeMin, long? fileSizeMax) {
+            _filePropertySizeMin = fileSizeMin;
+            _filePropertySizeMax = fileSizeMax;
         }
 
         #region Inner classes and structs

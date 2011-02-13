@@ -71,6 +71,10 @@ namespace NTextSearch {
             _engine.SetFilePropertyDate(dateFrom, dateTo);
         }
 
+        public void SetFilePropertySize(long? minFileSize, long? maxFileSize){
+            _engine.SetFilePropertySize(minFileSize, maxFileSize);
+        }
+
         public DateTime? FilePropertiesDateTo {get; set;}
 
         private void Bind(ITextSearch plugin){

@@ -8,6 +8,7 @@ namespace NTextSearch{
         string FolderName { get; set; }
         bool Recusive { get; set; }
         void SetFilePropertyDate(DateTime? dateFrom, DateTime? dateTo);
+        void SetFilePropertySize(long? minFileSize, long? maxFileSize);
         void SetFileAttributes(bool? isReadOnly, bool? isArchive, bool? isHidden, bool? isSystem);
         DateTime? FilePropertiesDateTo { get; set; }
         void PerformSearch(string text);
