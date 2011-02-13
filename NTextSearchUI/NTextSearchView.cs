@@ -1,64 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace NTextSearch{
     public partial class NTextSearchView : Form, ITextSearchView {
         private const string INIT_FOLDER_NAME = @"C:\NSearchButtonTestFiles";
         private readonly FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
+        private List<CheckBox> _fileAttributesControls;
+        private ITextSearchPresenter Presenter { get; set; }
 
         public NTextSearchView() {
             InitializeComponent();
             InitPresenter();
             InitFolderBrowser();
-            SetStatus(string.Empty);
-            buttonSearch.Enabled = false;
-            checkBoxRecursive.Checked = Presenter.Recusive;
+            InitFileProperties();
+            InitFileAttributes();
             Bind();
+            SetStatus(string.Empty);
         }
 
-        private void Bind(){
-            toolStripButtonExit.Click += toolStripButtonExit_Click;
-            toolStripButtonRefreshPlugins.Click += toolStripButtonRefreshPlugins_Click;
-            comboBoxPlugins.SelectedIndexChanged += comboBoxPlugins_SelectedIndexChanged;
-            buttonRefreshPlugins.Click += buttonRefreshPlugins_Click;
-            buttonBrowseFolder.Click += buttonBrowseFolder_Click;
-            buttonSearch.Click += buttonSearch_Click;
-            checkBoxRecursive.CheckedChanged += checkBoxRecursive_CheckedChanged;
+        #region Initializers
+
+        private void InitPresenter() {
+            var folderName = Directory.Exists(INIT_FOLDER_NAME) ? INIT_FOLDER_NAME : @"C:\";
+            Presenter = new NTextSearchPresenter(this, folderName);
+            Presenter.OnSearchEnabled += (src, args) => buttonSearch.Enabled = args.Enable;
+            Presenter.OnAddListItem += (src, args) => listView.Items.Add(args.ListViewItem);
         }
 
-        private void checkBoxRecursive_CheckedChanged(object sender, EventArgs e) {
-            Presenter.Recusive = ((CheckBox)sender).Checked;
-        }
-
-        private void InitFolderBrowser(){
+        private void InitFolderBrowser() {
             _folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
             _folderBrowserDialog.SelectedPath = Presenter.FolderName;
             SetFolderName();
         }
 
-        private void InitPresenter(){
-            Presenter = new NTextSearchPresenter(this, INIT_FOLDER_NAME);
-            Presenter.OnSearchEnabled += (src, args) => buttonSearch.Enabled = args.Enable;
-            Presenter.OnAddListItem += (src, args) => listView.Items.Add(args.ListViewItem);
+        private void InitFileProperties() {
+            dateTimePickerFrom.Value = dateTimePickerTo.Value = DateTime.Now;
         }
 
-        private ITextSearchPresenter Presenter { get; set; }
+        private void InitFileAttributes() {
+            _fileAttributesControls = new List<CheckBox>{
+                                                            checkBoxFileAttributeArchive,
+                                                            checkBoxFileAttributeReadOnly,
+                                                            checkBoxFileAttributeHidden,
+                                                            checkBoxFileAttributeSystem
+                                                        };
+            ClearFileAttributes();
+        }
+
+        private void Bind(){
+            toolStripButtonExit.Click += (s, e) => Presenter.Exit();
+            toolStripButtonRefreshPlugins.Click += (s, e) => Presenter.RefreshPlugins();
+            comboBoxPlugins.SelectedIndexChanged += (s, e) => SelectedPlugin();
+            buttonRefreshPlugins.Click += (s, e) => Presenter.RefreshPlugins();
+            buttonBrowseFolder.Click += (s, e) => SelectFolder();
+            buttonSearch.Click += (s, e) => Presenter.PerformSearch(textBoxTargetText.Text);
+            checkBoxRecursive.CheckedChanged += (s, e) => RefreshRecusiveSearch();
+            buttonClearFileAttributes.Click += (s, e) => ClearFileAttributes();
+            buttonFileDateClear.Click += (s, e) => DisableFilePropertiesDate();
+            checkBoxFileDateFromEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesDate();
+            checkBoxFileDateToEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesDate();
+            dateTimePickerFrom.ValueChanged += (s, e) => RefreshFilePropertiesDate();
+            dateTimePickerTo.ValueChanged += (s, e) => RefreshFilePropertiesDate();
+            _fileAttributesControls.ForEach(cb => cb.CheckedChanged += (s,e)=>RefreshFileAttributes());
+        }
+
+        #endregion
+
+        private void SelectedPlugin(){
+            Presenter.SelectPlugin((ITextSearch) comboBoxPlugins.SelectedItem);
+        }
+
+        private void RefreshFileAttributes(){
+            Presenter.SetFileAttributes(GetFileAttributeValue(checkBoxFileAttributeReadOnly),
+                                        GetFileAttributeValue(checkBoxFileAttributeArchive),
+                                        GetFileAttributeValue(checkBoxFileAttributeHidden),
+                                        GetFileAttributeValue(checkBoxFileAttributeSystem));
+        }
+
+        private void RefreshFilePropertiesDate(){
+            dateTimePickerFrom.Enabled = checkBoxFileDateFromEnabled.Checked;
+            dateTimePickerTo.Enabled = checkBoxFileDateToEnabled.Checked;
+            Presenter.SetFilePropertyDate(GetFilePropertyDateBy(checkBoxFileDateFromEnabled, dateTimePickerFrom),
+                                          GetFilePropertyDateBy(checkBoxFileDateToEnabled, dateTimePickerTo));
+        }
+
+        private void RefreshRecusiveSearch(){
+            Presenter.Recusive = checkBoxRecursive.Checked;
+        }
 
         protected override void OnLoad(EventArgs e){
             base.OnLoad(e);
-            Presenter.RefreshPlugins();
-        }
-
-        private void toolStripButtonExit_Click(object sender, EventArgs e) {
-            Presenter.Exit();
-        }
-
-        private void toolStripButtonRefreshPlugins_Click(object sender, EventArgs e) {
-            Presenter.RefreshPlugins();
-        }
-
-        private void buttonRefreshPlugins_Click(object sender, EventArgs e) {
             Presenter.RefreshPlugins();
         }
 
@@ -80,23 +113,29 @@ namespace NTextSearch{
             listView.Items.Clear();
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e) {
-            Presenter.PerformSearch(textBoxTargetText.Text);
-        }
-
-        private void comboBoxPlugins_SelectedIndexChanged(object sender, EventArgs e) {
-            Presenter.SelectPlugin((ITextSearch) comboBoxPlugins.SelectedItem);
-        }
-
-        private void buttonBrowseFolder_Click(object sender, EventArgs e){
-            if (_folderBrowserDialog.ShowDialog() == DialogResult.Cancel)
-                return;
-            SetFolderName();
+        private void SelectFolder(){
+            if (_folderBrowserDialog.ShowDialog() != DialogResult.Cancel)
+                SetFolderName();
         }
 
         private void SetFolderName(){
-            var folderName  = textBoxFolderName.Text = _folderBrowserDialog.SelectedPath;
-            Presenter.FolderName = folderName;
+            Presenter.FolderName = textBoxFolderName.Text = _folderBrowserDialog.SelectedPath;
+        }
+
+        private void DisableFilePropertiesDate(){
+            checkBoxFileDateFromEnabled.Checked = checkBoxFileDateToEnabled.Checked = false;
+        }
+
+        private static bool? GetFileAttributeValue(CheckBox checkBox) {
+            return checkBox.CheckState == CheckState.Indeterminate ? (bool?)null : checkBox.Checked;
+        }
+
+        private static DateTime? GetFilePropertyDateBy(CheckBox checkBox, DateTimePicker dateTimePicker) {
+            return checkBox.Checked ? dateTimePicker.Value : (DateTime?)null;
+        }
+
+        private void ClearFileAttributes() {
+            _fileAttributesControls.ForEach(cb => cb.CheckState = CheckState.Indeterminate);
         }
     }
 }

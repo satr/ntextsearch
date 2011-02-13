@@ -63,6 +63,16 @@ namespace NTextSearch {
             set { _engine.Recursive = value; }
         }
 
+        public void SetFileAttributes(bool? isReadOnly, bool? isArchive, bool? isHidden, bool? isSystem){
+            _engine.SetFileAttributes(isReadOnly, isArchive, isHidden, isSystem);
+        }
+
+        public void SetFilePropertyDate(DateTime? dateFrom, DateTime? dateTo){
+            _engine.SetFilePropertyDate(dateFrom, dateTo);
+        }
+
+        public DateTime? FilePropertiesDateTo {get; set;}
+
         private void Bind(ITextSearch plugin){
             plugin.OnNotify += plugin_OnNotify;
         }

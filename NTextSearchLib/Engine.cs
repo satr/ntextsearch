@@ -6,7 +6,24 @@ using System.Reflection;
 
 namespace NTextSearch {
     public class Engine {
+        private struct FileAttributes{
+            public bool? IsReadOnly;
+            public bool? IsArchive;
+            public bool? IsHidden;
+            public bool? IsSystem;
+
+            public FileAttributes(bool? isReadOnly, bool? isArchive, bool? isHidden, bool? isSystem){
+                IsReadOnly = isReadOnly;
+                IsArchive = isArchive;
+                IsHidden = isHidden;
+                IsSystem = isSystem;
+            }
+        }
         const string PLUGINS_SUBFOLDER_NAME = "plugins";
+        private FileAttributes _fileAttributes = new FileAttributes();
+        private DateTime? _filePropertyDateFrom;
+        private DateTime? _filePropertyDateTo;
+
         public Engine() {
             Plugins = new List<ITextSearch>();
         }
@@ -123,6 +140,15 @@ namespace NTextSearch {
                 return false;
             }
             return true;
+        }
+
+        public void SetFileAttributes(bool? isReadOnly, bool? isArchive, bool? isHidden, bool? isSystem){
+            _fileAttributes = new FileAttributes(isReadOnly, isArchive, isHidden, isSystem);
+        }
+
+        public void SetFilePropertyDate(DateTime? dateFrom, DateTime? dateTo){
+            _filePropertyDateFrom = dateFrom;
+            _filePropertyDateTo = dateTo;
         }
     }
 }
