@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace NTextSearch{
@@ -17,10 +11,24 @@ namespace NTextSearch{
             InitializeComponent();
             InitPresenter();
             InitFolderBrowser();
-            checkBoxRecursive.Checked = Presenter.Recusive;
-            checkBoxRecursive.CheckedChanged += (src, args) => {Presenter.Recusive = ((CheckBox) src).Checked;};
-            buttonSearch.Enabled = false;
             SetStatus(string.Empty);
+            buttonSearch.Enabled = false;
+            checkBoxRecursive.Checked = Presenter.Recusive;
+            Bind();
+        }
+
+        private void Bind(){
+            toolStripButtonExit.Click += toolStripButtonExit_Click;
+            toolStripButtonRefreshPlugins.Click += toolStripButtonRefreshPlugins_Click;
+            comboBoxPlugins.SelectedIndexChanged += comboBoxPlugins_SelectedIndexChanged;
+            buttonRefreshPlugins.Click += buttonRefreshPlugins_Click;
+            buttonBrowseFolder.Click += buttonBrowseFolder_Click;
+            buttonSearch.Click += buttonSearch_Click;
+            checkBoxRecursive.CheckedChanged += checkBoxRecursive_CheckedChanged;
+        }
+
+        private void checkBoxRecursive_CheckedChanged(object sender, EventArgs e) {
+            Presenter.Recusive = ((CheckBox)sender).Checked;
         }
 
         private void InitFolderBrowser(){
@@ -31,7 +39,7 @@ namespace NTextSearch{
 
         private void InitPresenter(){
             Presenter = new NTextSearchPresenter(this, INIT_FOLDER_NAME);
-            Presenter.OnSearchEnabled += (src, args) => { buttonSearch.Enabled = args.Enable; };
+            Presenter.OnSearchEnabled += (src, args) => buttonSearch.Enabled = args.Enable;
             Presenter.OnAddListItem += (src, args) => listView.Items.Add(args.ListViewItem);
         }
 
