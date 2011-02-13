@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ExitIcon.png" />
+    <Content Include="Resources\NTextSearch.ico" />
     <Content Include="Resources\RefreshPlugins16x16.png" />
   </ItemGroup>
   <ItemGroup>

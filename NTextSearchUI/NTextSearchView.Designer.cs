@@ -38,13 +38,33 @@
             this.comboBoxPlugins = new System.Windows.Forms.ComboBox();
             this.buttonRefreshPlugins = new System.Windows.Forms.Button();
             this.panelFileProperties = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.numericUpDownFileSizeMax = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBoxFileSizeMinEnabled = new System.Windows.Forms.CheckBox();
+            this.checkBoxFileSizeMaxEnabled = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDownFileSizeMin = new System.Windows.Forms.NumericUpDown();
+            this.groupBoxFileDate = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanelFileDate = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
+            this.checkBoxFileDateFromEnabled = new System.Windows.Forms.CheckBox();
+            this.checkBoxFileDateToEnabled = new System.Windows.Forms.CheckBox();
+            this.panelFilePropertiesLeftPan = new System.Windows.Forms.Panel();
+            this.panelFilePropertiesClear = new System.Windows.Forms.Panel();
+            this.buttonClearFileAttributes = new System.Windows.Forms.Button();
             this.groupBoxFileAttributes = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanelFileAttributes = new System.Windows.Forms.TableLayoutPanel();
             this.checkBoxFileAttributeArchive = new System.Windows.Forms.CheckBox();
-            this.checkBoxFileAttributeSystem = new System.Windows.Forms.CheckBox();
             this.checkBoxFileAttributeReadOnly = new System.Windows.Forms.CheckBox();
             this.checkBoxFileAttributeHidden = new System.Windows.Forms.CheckBox();
-            this.buttonClearFileAttributes = new System.Windows.Forms.Button();
+            this.checkBoxFileAttributeSystem = new System.Windows.Forms.CheckBox();
             this.listView = new System.Windows.Forms.ListView();
             this.columnHeaderState = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderFileName = new System.Windows.Forms.ColumnHeader();
@@ -59,26 +79,6 @@
             this.textBoxTargetText = new System.Windows.Forms.TextBox();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.panelFilePropertiesLeftPan = new System.Windows.Forms.Panel();
-            this.panelFilePropertiesClear = new System.Windows.Forms.Panel();
-            this.groupBoxFileDate = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanelFileDate = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
-            this.checkBoxFileDateFromEnabled = new System.Windows.Forms.CheckBox();
-            this.checkBoxFileDateToEnabled = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.checkBoxFileSizeMinEnabled = new System.Windows.Forms.CheckBox();
-            this.checkBoxFileSizeMaxEnabled = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDownFileSizeMin = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownFileSizeMax = new System.Windows.Forms.NumericUpDown();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -87,20 +87,20 @@
             this.splitContainerMain.SuspendLayout();
             this.groupBoxPlugins.SuspendLayout();
             this.panelFileProperties.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMin)).BeginInit();
+            this.groupBoxFileDate.SuspendLayout();
+            this.tableLayoutPanelFileDate.SuspendLayout();
+            this.panelFilePropertiesLeftPan.SuspendLayout();
+            this.panelFilePropertiesClear.SuspendLayout();
             this.groupBoxFileAttributes.SuspendLayout();
             this.tableLayoutPanelFileAttributes.SuspendLayout();
             this.panelTargetText.SuspendLayout();
             this.groupBoxFolderName.SuspendLayout();
             this.panelFolderName.SuspendLayout();
             this.groupBoxTargetText.SuspendLayout();
-            this.panelFilePropertiesLeftPan.SuspendLayout();
-            this.panelFilePropertiesClear.SuspendLayout();
-            this.groupBoxFileDate.SuspendLayout();
-            this.tableLayoutPanelFileDate.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMax)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -241,6 +241,246 @@
             this.panelFileProperties.Size = new System.Drawing.Size(271, 144);
             this.panelFileProperties.TabIndex = 0;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 75);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(181, 68);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "File size";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDownFileSizeMax, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxFileSizeMinEnabled, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxFileSizeMaxEnabled, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDownFileSizeMin, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(175, 49);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // numericUpDownFileSizeMax
+            // 
+            this.numericUpDownFileSizeMax.DecimalPlaces = 2;
+            this.numericUpDownFileSizeMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDownFileSizeMax.Enabled = false;
+            this.numericUpDownFileSizeMax.Location = new System.Drawing.Point(43, 28);
+            this.numericUpDownFileSizeMax.Name = "numericUpDownFileSizeMax";
+            this.numericUpDownFileSizeMax.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownFileSizeMax.TabIndex = 9;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 5);
+            this.label3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(24, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Min";
+            // 
+            // checkBoxFileSizeMinEnabled
+            // 
+            this.checkBoxFileSizeMinEnabled.AutoSize = true;
+            this.checkBoxFileSizeMinEnabled.Location = new System.Drawing.Point(146, 5);
+            this.checkBoxFileSizeMinEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.checkBoxFileSizeMinEnabled.Name = "checkBoxFileSizeMinEnabled";
+            this.checkBoxFileSizeMinEnabled.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxFileSizeMinEnabled.TabIndex = 4;
+            this.checkBoxFileSizeMinEnabled.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxFileSizeMaxEnabled
+            // 
+            this.checkBoxFileSizeMaxEnabled.AutoSize = true;
+            this.checkBoxFileSizeMaxEnabled.Location = new System.Drawing.Point(146, 30);
+            this.checkBoxFileSizeMaxEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.checkBoxFileSizeMaxEnabled.Name = "checkBoxFileSizeMaxEnabled";
+            this.checkBoxFileSizeMaxEnabled.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxFileSizeMaxEnabled.TabIndex = 5;
+            this.checkBoxFileSizeMaxEnabled.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(109, 5);
+            this.label5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(23, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "MB";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(109, 30);
+            this.label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(23, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "MB";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 30);
+            this.label4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Max";
+            // 
+            // numericUpDownFileSizeMin
+            // 
+            this.numericUpDownFileSizeMin.DecimalPlaces = 2;
+            this.numericUpDownFileSizeMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDownFileSizeMin.Enabled = false;
+            this.numericUpDownFileSizeMin.Location = new System.Drawing.Point(43, 3);
+            this.numericUpDownFileSizeMin.Name = "numericUpDownFileSizeMin";
+            this.numericUpDownFileSizeMin.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownFileSizeMin.TabIndex = 8;
+            // 
+            // groupBoxFileDate
+            // 
+            this.groupBoxFileDate.Controls.Add(this.tableLayoutPanelFileDate);
+            this.groupBoxFileDate.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxFileDate.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxFileDate.Name = "groupBoxFileDate";
+            this.groupBoxFileDate.Size = new System.Drawing.Size(181, 75);
+            this.groupBoxFileDate.TabIndex = 10;
+            this.groupBoxFileDate.TabStop = false;
+            this.groupBoxFileDate.Text = "File date";
+            // 
+            // tableLayoutPanelFileDate
+            // 
+            this.tableLayoutPanelFileDate.ColumnCount = 3;
+            this.tableLayoutPanelFileDate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelFileDate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelFileDate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanelFileDate.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanelFileDate.Controls.Add(this.label2, 0, 1);
+            this.tableLayoutPanelFileDate.Controls.Add(this.dateTimePickerFrom, 1, 0);
+            this.tableLayoutPanelFileDate.Controls.Add(this.dateTimePickerTo, 1, 1);
+            this.tableLayoutPanelFileDate.Controls.Add(this.checkBoxFileDateFromEnabled, 2, 0);
+            this.tableLayoutPanelFileDate.Controls.Add(this.checkBoxFileDateToEnabled, 2, 1);
+            this.tableLayoutPanelFileDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelFileDate.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanelFileDate.Name = "tableLayoutPanelFileDate";
+            this.tableLayoutPanelFileDate.RowCount = 2;
+            this.tableLayoutPanelFileDate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanelFileDate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanelFileDate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelFileDate.Size = new System.Drawing.Size(175, 56);
+            this.tableLayoutPanelFileDate.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 5);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "From";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 30);
+            this.label2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "To";
+            // 
+            // dateTimePickerFrom
+            // 
+            this.dateTimePickerFrom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateTimePickerFrom.Enabled = false;
+            this.dateTimePickerFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerFrom.Location = new System.Drawing.Point(43, 3);
+            this.dateTimePickerFrom.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.dateTimePickerFrom.Name = "dateTimePickerFrom";
+            this.dateTimePickerFrom.Size = new System.Drawing.Size(97, 20);
+            this.dateTimePickerFrom.TabIndex = 2;
+            // 
+            // dateTimePickerTo
+            // 
+            this.dateTimePickerTo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateTimePickerTo.Enabled = false;
+            this.dateTimePickerTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerTo.Location = new System.Drawing.Point(43, 28);
+            this.dateTimePickerTo.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.dateTimePickerTo.Name = "dateTimePickerTo";
+            this.dateTimePickerTo.Size = new System.Drawing.Size(97, 20);
+            this.dateTimePickerTo.TabIndex = 3;
+            // 
+            // checkBoxFileDateFromEnabled
+            // 
+            this.checkBoxFileDateFromEnabled.AutoSize = true;
+            this.checkBoxFileDateFromEnabled.Location = new System.Drawing.Point(146, 5);
+            this.checkBoxFileDateFromEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.checkBoxFileDateFromEnabled.Name = "checkBoxFileDateFromEnabled";
+            this.checkBoxFileDateFromEnabled.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxFileDateFromEnabled.TabIndex = 4;
+            this.checkBoxFileDateFromEnabled.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxFileDateToEnabled
+            // 
+            this.checkBoxFileDateToEnabled.AutoSize = true;
+            this.checkBoxFileDateToEnabled.Location = new System.Drawing.Point(146, 30);
+            this.checkBoxFileDateToEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.checkBoxFileDateToEnabled.Name = "checkBoxFileDateToEnabled";
+            this.checkBoxFileDateToEnabled.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxFileDateToEnabled.TabIndex = 5;
+            this.checkBoxFileDateToEnabled.UseVisualStyleBackColor = true;
+            // 
+            // panelFilePropertiesLeftPan
+            // 
+            this.panelFilePropertiesLeftPan.Controls.Add(this.panelFilePropertiesClear);
+            this.panelFilePropertiesLeftPan.Controls.Add(this.groupBoxFileAttributes);
+            this.panelFilePropertiesLeftPan.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelFilePropertiesLeftPan.Location = new System.Drawing.Point(181, 0);
+            this.panelFilePropertiesLeftPan.Name = "panelFilePropertiesLeftPan";
+            this.panelFilePropertiesLeftPan.Size = new System.Drawing.Size(90, 144);
+            this.panelFilePropertiesLeftPan.TabIndex = 9;
+            // 
+            // panelFilePropertiesClear
+            // 
+            this.panelFilePropertiesClear.Controls.Add(this.buttonClearFileAttributes);
+            this.panelFilePropertiesClear.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelFilePropertiesClear.Location = new System.Drawing.Point(0, 118);
+            this.panelFilePropertiesClear.Name = "panelFilePropertiesClear";
+            this.panelFilePropertiesClear.Size = new System.Drawing.Size(90, 26);
+            this.panelFilePropertiesClear.TabIndex = 0;
+            // 
+            // buttonClearFileAttributes
+            // 
+            this.buttonClearFileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonClearFileAttributes.Location = new System.Drawing.Point(0, 3);
+            this.buttonClearFileAttributes.Name = "buttonClearFileAttributes";
+            this.buttonClearFileAttributes.Size = new System.Drawing.Size(90, 23);
+            this.buttonClearFileAttributes.TabIndex = 4;
+            this.buttonClearFileAttributes.Text = "Clear all";
+            this.buttonClearFileAttributes.UseVisualStyleBackColor = true;
+            // 
             // groupBoxFileAttributes
             // 
             this.groupBoxFileAttributes.Controls.Add(this.tableLayoutPanelFileAttributes);
@@ -255,7 +495,7 @@
             // tableLayoutPanelFileAttributes
             // 
             this.tableLayoutPanelFileAttributes.ColumnCount = 1;
-            this.tableLayoutPanelFileAttributes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.tableLayoutPanelFileAttributes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tableLayoutPanelFileAttributes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.tableLayoutPanelFileAttributes.Controls.Add(this.checkBoxFileAttributeArchive, 0, 1);
             this.tableLayoutPanelFileAttributes.Controls.Add(this.checkBoxFileAttributeReadOnly, 0, 0);
@@ -284,18 +524,6 @@
             this.checkBoxFileAttributeArchive.Text = "Archive";
             this.checkBoxFileAttributeArchive.UseVisualStyleBackColor = true;
             // 
-            // checkBoxFileAttributeSystem
-            // 
-            this.checkBoxFileAttributeSystem.AutoSize = true;
-            this.checkBoxFileAttributeSystem.Checked = true;
-            this.checkBoxFileAttributeSystem.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.checkBoxFileAttributeSystem.Location = new System.Drawing.Point(3, 81);
-            this.checkBoxFileAttributeSystem.Name = "checkBoxFileAttributeSystem";
-            this.checkBoxFileAttributeSystem.Size = new System.Drawing.Size(60, 17);
-            this.checkBoxFileAttributeSystem.TabIndex = 3;
-            this.checkBoxFileAttributeSystem.Text = "System";
-            this.checkBoxFileAttributeSystem.UseVisualStyleBackColor = true;
-            // 
             // checkBoxFileAttributeReadOnly
             // 
             this.checkBoxFileAttributeReadOnly.AutoSize = true;
@@ -320,15 +548,17 @@
             this.checkBoxFileAttributeHidden.Text = "Hidden";
             this.checkBoxFileAttributeHidden.UseVisualStyleBackColor = true;
             // 
-            // buttonClearFileAttributes
+            // checkBoxFileAttributeSystem
             // 
-            this.buttonClearFileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonClearFileAttributes.Location = new System.Drawing.Point(0, 3);
-            this.buttonClearFileAttributes.Name = "buttonClearFileAttributes";
-            this.buttonClearFileAttributes.Size = new System.Drawing.Size(90, 23);
-            this.buttonClearFileAttributes.TabIndex = 4;
-            this.buttonClearFileAttributes.Text = "Clear all";
-            this.buttonClearFileAttributes.UseVisualStyleBackColor = true;
+            this.checkBoxFileAttributeSystem.AutoSize = true;
+            this.checkBoxFileAttributeSystem.Checked = true;
+            this.checkBoxFileAttributeSystem.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.checkBoxFileAttributeSystem.Location = new System.Drawing.Point(3, 81);
+            this.checkBoxFileAttributeSystem.Name = "checkBoxFileAttributeSystem";
+            this.checkBoxFileAttributeSystem.Size = new System.Drawing.Size(60, 17);
+            this.checkBoxFileAttributeSystem.TabIndex = 3;
+            this.checkBoxFileAttributeSystem.Text = "System";
+            this.checkBoxFileAttributeSystem.UseVisualStyleBackColor = true;
             // 
             // listView
             // 
@@ -458,236 +688,6 @@
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
             // 
-            // panelFilePropertiesLeftPan
-            // 
-            this.panelFilePropertiesLeftPan.Controls.Add(this.panelFilePropertiesClear);
-            this.panelFilePropertiesLeftPan.Controls.Add(this.groupBoxFileAttributes);
-            this.panelFilePropertiesLeftPan.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelFilePropertiesLeftPan.Location = new System.Drawing.Point(181, 0);
-            this.panelFilePropertiesLeftPan.Name = "panelFilePropertiesLeftPan";
-            this.panelFilePropertiesLeftPan.Size = new System.Drawing.Size(90, 144);
-            this.panelFilePropertiesLeftPan.TabIndex = 9;
-            // 
-            // panelFilePropertiesClear
-            // 
-            this.panelFilePropertiesClear.Controls.Add(this.buttonClearFileAttributes);
-            this.panelFilePropertiesClear.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFilePropertiesClear.Location = new System.Drawing.Point(0, 118);
-            this.panelFilePropertiesClear.Name = "panelFilePropertiesClear";
-            this.panelFilePropertiesClear.Size = new System.Drawing.Size(90, 26);
-            this.panelFilePropertiesClear.TabIndex = 0;
-            // 
-            // groupBoxFileDate
-            // 
-            this.groupBoxFileDate.Controls.Add(this.tableLayoutPanelFileDate);
-            this.groupBoxFileDate.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBoxFileDate.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxFileDate.Name = "groupBoxFileDate";
-            this.groupBoxFileDate.Size = new System.Drawing.Size(181, 75);
-            this.groupBoxFileDate.TabIndex = 10;
-            this.groupBoxFileDate.TabStop = false;
-            this.groupBoxFileDate.Text = "File date";
-            // 
-            // tableLayoutPanelFileDate
-            // 
-            this.tableLayoutPanelFileDate.ColumnCount = 3;
-            this.tableLayoutPanelFileDate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelFileDate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelFileDate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFileDate.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanelFileDate.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanelFileDate.Controls.Add(this.dateTimePickerFrom, 1, 0);
-            this.tableLayoutPanelFileDate.Controls.Add(this.dateTimePickerTo, 1, 1);
-            this.tableLayoutPanelFileDate.Controls.Add(this.checkBoxFileDateFromEnabled, 2, 0);
-            this.tableLayoutPanelFileDate.Controls.Add(this.checkBoxFileDateToEnabled, 2, 1);
-            this.tableLayoutPanelFileDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelFileDate.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelFileDate.Name = "tableLayoutPanelFileDate";
-            this.tableLayoutPanelFileDate.RowCount = 2;
-            this.tableLayoutPanelFileDate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanelFileDate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanelFileDate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelFileDate.Size = new System.Drawing.Size(175, 56);
-            this.tableLayoutPanelFileDate.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 5);
-            this.label1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "From";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 30);
-            this.label2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(20, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "To";
-            // 
-            // dateTimePickerFrom
-            // 
-            this.dateTimePickerFrom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateTimePickerFrom.Enabled = false;
-            this.dateTimePickerFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerFrom.Location = new System.Drawing.Point(43, 3);
-            this.dateTimePickerFrom.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-            this.dateTimePickerFrom.Name = "dateTimePickerFrom";
-            this.dateTimePickerFrom.Size = new System.Drawing.Size(97, 20);
-            this.dateTimePickerFrom.TabIndex = 2;
-            // 
-            // dateTimePickerTo
-            // 
-            this.dateTimePickerTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateTimePickerTo.Enabled = false;
-            this.dateTimePickerTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerTo.Location = new System.Drawing.Point(43, 28);
-            this.dateTimePickerTo.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-            this.dateTimePickerTo.Name = "dateTimePickerTo";
-            this.dateTimePickerTo.Size = new System.Drawing.Size(97, 20);
-            this.dateTimePickerTo.TabIndex = 3;
-            // 
-            // checkBoxFileDateFromEnabled
-            // 
-            this.checkBoxFileDateFromEnabled.AutoSize = true;
-            this.checkBoxFileDateFromEnabled.Location = new System.Drawing.Point(146, 5);
-            this.checkBoxFileDateFromEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.checkBoxFileDateFromEnabled.Name = "checkBoxFileDateFromEnabled";
-            this.checkBoxFileDateFromEnabled.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxFileDateFromEnabled.TabIndex = 4;
-            this.checkBoxFileDateFromEnabled.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxFileDateToEnabled
-            // 
-            this.checkBoxFileDateToEnabled.AutoSize = true;
-            this.checkBoxFileDateToEnabled.Location = new System.Drawing.Point(146, 30);
-            this.checkBoxFileDateToEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.checkBoxFileDateToEnabled.Name = "checkBoxFileDateToEnabled";
-            this.checkBoxFileDateToEnabled.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxFileDateToEnabled.TabIndex = 5;
-            this.checkBoxFileDateToEnabled.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 75);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(181, 68);
-            this.groupBox1.TabIndex = 11;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "File size";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDownFileSizeMax, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.checkBoxFileSizeMinEnabled, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.checkBoxFileSizeMaxEnabled, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDownFileSizeMin, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(175, 49);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 5);
-            this.label3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(24, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Min";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 30);
-            this.label4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Max";
-            // 
-            // checkBoxFileSizeMinEnabled
-            // 
-            this.checkBoxFileSizeMinEnabled.AutoSize = true;
-            this.checkBoxFileSizeMinEnabled.Location = new System.Drawing.Point(146, 5);
-            this.checkBoxFileSizeMinEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.checkBoxFileSizeMinEnabled.Name = "checkBoxFileSizeMinEnabled";
-            this.checkBoxFileSizeMinEnabled.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxFileSizeMinEnabled.TabIndex = 4;
-            this.checkBoxFileSizeMinEnabled.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxFileSizeMaxEnabled
-            // 
-            this.checkBoxFileSizeMaxEnabled.AutoSize = true;
-            this.checkBoxFileSizeMaxEnabled.Location = new System.Drawing.Point(146, 30);
-            this.checkBoxFileSizeMaxEnabled.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.checkBoxFileSizeMaxEnabled.Name = "checkBoxFileSizeMaxEnabled";
-            this.checkBoxFileSizeMaxEnabled.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxFileSizeMaxEnabled.TabIndex = 5;
-            this.checkBoxFileSizeMaxEnabled.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(109, 5);
-            this.label5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "MB";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(109, 30);
-            this.label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(23, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "MB";
-            // 
-            // numericUpDownFileSizeMin
-            // 
-            this.numericUpDownFileSizeMin.DecimalPlaces = 2;
-            this.numericUpDownFileSizeMin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDownFileSizeMin.Enabled = false;
-            this.numericUpDownFileSizeMin.Location = new System.Drawing.Point(43, 3);
-            this.numericUpDownFileSizeMin.Name = "numericUpDownFileSizeMin";
-            this.numericUpDownFileSizeMin.Size = new System.Drawing.Size(60, 20);
-            this.numericUpDownFileSizeMin.TabIndex = 8;
-            // 
-            // numericUpDownFileSizeMax
-            // 
-            this.numericUpDownFileSizeMax.DecimalPlaces = 2;
-            this.numericUpDownFileSizeMax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDownFileSizeMax.Enabled = false;
-            this.numericUpDownFileSizeMax.Location = new System.Drawing.Point(43, 28);
-            this.numericUpDownFileSizeMax.Name = "numericUpDownFileSizeMax";
-            this.numericUpDownFileSizeMax.Size = new System.Drawing.Size(60, 20);
-            this.numericUpDownFileSizeMax.TabIndex = 9;
-            // 
             // NTextSearchView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -697,6 +697,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.panelTargetText);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NTextSearchView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NTextSearch";
@@ -710,6 +711,16 @@
             this.splitContainerMain.ResumeLayout(false);
             this.groupBoxPlugins.ResumeLayout(false);
             this.panelFileProperties.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMin)).EndInit();
+            this.groupBoxFileDate.ResumeLayout(false);
+            this.tableLayoutPanelFileDate.ResumeLayout(false);
+            this.tableLayoutPanelFileDate.PerformLayout();
+            this.panelFilePropertiesLeftPan.ResumeLayout(false);
+            this.panelFilePropertiesClear.ResumeLayout(false);
             this.groupBoxFileAttributes.ResumeLayout(false);
             this.tableLayoutPanelFileAttributes.ResumeLayout(false);
             this.tableLayoutPanelFileAttributes.PerformLayout();
@@ -720,16 +731,6 @@
             this.panelFolderName.PerformLayout();
             this.groupBoxTargetText.ResumeLayout(false);
             this.groupBoxTargetText.PerformLayout();
-            this.panelFilePropertiesLeftPan.ResumeLayout(false);
-            this.panelFilePropertiesClear.ResumeLayout(false);
-            this.groupBoxFileDate.ResumeLayout(false);
-            this.tableLayoutPanelFileDate.ResumeLayout(false);
-            this.tableLayoutPanelFileDate.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFileSizeMax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
