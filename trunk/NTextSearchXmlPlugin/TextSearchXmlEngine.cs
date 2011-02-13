@@ -6,10 +6,12 @@ using NTextSearch;
 namespace NTextSearchXmlPlugin {
     [TextSearchEngine]
     public class TextSearchXmlEngine : AbstractTextSearchPlugin {
+        private readonly Guid _searchInValuesPropertyId;
+        private readonly Guid _searchInElementsPropertyId;
 
         public TextSearchXmlEngine(){
-            SearchInValues = true;
-            SearchInElements = false;
+            _searchInValuesPropertyId = AddBooleanProperty(true, "Search in values");
+            _searchInElementsPropertyId = AddBooleanProperty(false, "Search in elements");
         }
 
         public override string FileExtention {
@@ -38,8 +40,17 @@ namespace NTextSearchXmlPlugin {
             Notify(fileInfo, TextSearchStatus.TextNotFoundInFile);
         }
 
-        private bool SearchInValues { get; set; }
-        private bool SearchInElements { get; set; }
+        protected bool SearchInValues {
+            get {
+                return (bool)GetProperty(_searchInValuesPropertyId).Value;
+            }
+        }
+
+        protected bool SearchInElements {
+            get {
+                return (bool)GetProperty(_searchInElementsPropertyId).Value;
+            }
+        }
 
         private bool ValidateTextExistIn(XmlNodeList nodes){
             if (nodes == null)

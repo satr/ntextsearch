@@ -123,10 +123,10 @@ namespace NTextSearch{
             listView.Items.Clear();
         }
 
-        public void RefreshPluginProperties(){
+        public void RefreshPluginProperties(List<PluginProperty> pluginProperties) {
             groupBoxPluginProperties.SuspendLayout();
             groupBoxPluginProperties.Controls.Clear();
-            groupBoxPluginProperties.Controls.AddRange(PluginPropertiesAssembler.BuildControls());
+            groupBoxPluginProperties.Controls.AddRange(PluginPropertiesAssembler.BuildControls(pluginProperties));
             groupBoxPluginProperties.ResumeLayout(true);
         }
 

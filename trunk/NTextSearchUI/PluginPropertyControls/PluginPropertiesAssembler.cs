@@ -5,24 +5,24 @@ using NTextSearch.PluginPropertyControls;
 
 namespace NTextSearch{
     internal static class PluginPropertiesAssembler{
-        public static Control[] BuildControls(){
+        public static Control[] BuildControls(List<PluginProperty> pluginProperties) {
             var controls = new List<Control>();
-//            AddBuildPluginProperty(controls, PluginPropertyType.Boolean);//sample
+            pluginProperties.ForEach(property => AddBuildPluginProperty(controls, property));
             return controls.ToArray();
         }
 
-        private static void AddBuildPluginProperty(ICollection<Control> controls, string pluginPropertyType){
-            var pluginProperty = BuildPluginProperty(pluginPropertyType);
-            if (pluginProperty != null)
-                controls.Add(pluginProperty);
+        private static void AddBuildPluginProperty(ICollection<Control> controls, PluginProperty pluginProperty){
+            var pluginPropertyControl = BuildPluginProperty(pluginProperty);
+            if (pluginPropertyControl != null)
+                controls.Add(pluginPropertyControl);
         }
 
-        private static Control BuildPluginProperty(string pluginPropertyType){
-            switch(pluginPropertyType){
+        private static Control BuildPluginProperty(PluginProperty pluginProperty){
+            switch(pluginProperty.PropertyType){
                 case PluginPropertyType.Boolean:
-                    return new BooleanPluginPropertyControl{Dock = DockStyle.Top};
+                    return new BooleanPluginPropertyControl{Dock = DockStyle.Top, Property = pluginProperty};
             }
-            Debug.Fail(string.Format("Unsupported plugin property type \"{0}\"", pluginPropertyType));
+            Debug.Fail(string.Format("Unsupported plugin property type \"{0}\"", pluginProperty));
             return null;
         }
     }
