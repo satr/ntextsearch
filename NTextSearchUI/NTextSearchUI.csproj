@@ -55,6 +55,13 @@
     <Compile Include="NotificationHandlers\ErrorNotificationHandler.cs" />
     <Compile Include="EventArgs\ListViewEventArgs.cs" />
     <Compile Include="NotificationHandlers\FileNotFoundNotificationHandler.cs" />
+    <Compile Include="PluginPropertyControls\PluginPropertiesAssembler.cs" />
+    <Compile Include="PluginPropertyControls\BooleanPluginPropertyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PluginPropertyControls\BooleanPluginPropertyControl.Designer.cs">
+      <DependentUpon>BooleanPluginPropertyControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presenters\NTextSearchPresenter.cs" />
     <Compile Include="NTextSearchView.cs">
       <SubType>Form</SubType>
@@ -70,6 +77,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="NTextSearchView.resx">
       <DependentUpon>NTextSearchView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluginPropertyControls\BooleanPluginPropertyControl.resx">
+      <DependentUpon>BooleanPluginPropertyControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

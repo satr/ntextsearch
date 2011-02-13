@@ -123,6 +123,13 @@ namespace NTextSearch{
             listView.Items.Clear();
         }
 
+        public void RefreshPluginProperties(){
+            groupBoxPluginProperties.SuspendLayout();
+            groupBoxPluginProperties.Controls.Clear();
+            groupBoxPluginProperties.Controls.AddRange(PluginPropertiesAssembler.BuildControls());
+            groupBoxPluginProperties.ResumeLayout(true);
+        }
+
         private void SelectFolder(){
             if (_folderBrowserDialog.ShowDialog() != DialogResult.Cancel)
                 SetFolderName();

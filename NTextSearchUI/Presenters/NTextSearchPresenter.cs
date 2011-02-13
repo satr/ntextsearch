@@ -54,6 +54,7 @@ namespace NTextSearch {
                 Bind(_engine.CurrentPlugin);
             if (OnSearchEnabled != null)
                 OnSearchEnabled(this, new EnableStateEventArgs(_engine.CurrentPlugin != null));
+            View.RefreshPluginProperties();
         }
 
         public string FolderName {set; get;}

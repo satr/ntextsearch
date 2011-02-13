@@ -49,6 +49,7 @@
     <Compile Include="FileExtentions.cs" />
     <Compile Include="ITextSearch.cs" />
     <Compile Include="CustomDelegates.cs" />
+    <Compile Include="PluginPropertyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextSearchEngineAttribute.cs" />
     <Compile Include="TextSearchEventArg.cs" />
