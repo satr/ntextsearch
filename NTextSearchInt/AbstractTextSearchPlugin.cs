@@ -86,8 +86,12 @@ namespace NTextSearch{
         }
 
         protected void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus){
+            Notify(fileInfo, textSearchStatus, string.Empty);
+        }
+
+        protected void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus, string format, params object[] args){
             if (OnNotify != null)
-                OnNotify(new TextSearchEventArg(fileInfo.FullName, textSearchStatus));
+                OnNotify(new TextSearchEventArg(fileInfo.FullName, textSearchStatus, format, args));
         }
     }
 }
