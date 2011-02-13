@@ -8,7 +8,6 @@ namespace NTextSearchXmlPlugin {
     public class TextSearchXmlEngine : AbstractTextSearchPlugin {
 
         public TextSearchXmlEngine(){
-            MatchWholeWord = false;
             SearchInValues = true;
             SearchInElements = false;
         }
@@ -39,7 +38,6 @@ namespace NTextSearchXmlPlugin {
             Notify(fileInfo, TextSearchStatus.TextNotFoundInFile);
         }
 
-        private bool MatchWholeWord {get; set;}
         private bool SearchInValues { get; set; }
         private bool SearchInElements { get; set; }
 
@@ -66,16 +64,6 @@ namespace NTextSearchXmlPlugin {
             if ((SearchInValues && ValidateTextExistsIn(element.Value))
                 || (SearchInElements && ValidateTextExistsIn(element.Name)))
                 return true;
-            return false;
-        }
-
-        private bool ValidateTextExistsIn(string value){
-            if (string.IsNullOrEmpty(value))
-                return false;
-            if ((MatchWholeWord && value.Contains(TargetText))
-                || value.Contains(TargetText)) {//TODO - rework as strategy with comparers
-                return true;
-            }
             return false;
         }
     }
