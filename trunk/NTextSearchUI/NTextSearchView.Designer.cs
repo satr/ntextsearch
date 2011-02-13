@@ -47,6 +47,11 @@
             this.textBoxTargetText = new System.Windows.Forms.TextBox();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBoxFolderName = new System.Windows.Forms.GroupBox();
+            this.checkBoxRecursive = new System.Windows.Forms.CheckBox();
+            this.panelFolderName = new System.Windows.Forms.Panel();
+            this.textBoxFolderName = new System.Windows.Forms.TextBox();
+            this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -57,6 +62,8 @@
             this.groupBoxPlugins.SuspendLayout();
             this.panelTargetText.SuspendLayout();
             this.groupBoxTargetText.SuspendLayout();
+            this.groupBoxFolderName.SuspendLayout();
+            this.panelFolderName.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -118,9 +125,9 @@
             // 
             this.panelMain.Controls.Add(this.splitContainerMain);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 66);
+            this.panelMain.Location = new System.Drawing.Point(0, 124);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(695, 319);
+            this.panelMain.Size = new System.Drawing.Size(695, 261);
             this.panelMain.TabIndex = 3;
             // 
             // splitContainerMain
@@ -137,7 +144,7 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.listView);
-            this.splitContainerMain.Size = new System.Drawing.Size(695, 319);
+            this.splitContainerMain.Size = new System.Drawing.Size(695, 261);
             this.splitContainerMain.SplitterDistance = 231;
             this.splitContainerMain.TabIndex = 0;
             // 
@@ -146,7 +153,7 @@
             this.groupBoxPluginProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxPluginProperties.Location = new System.Drawing.Point(0, 42);
             this.groupBoxPluginProperties.Name = "groupBoxPluginProperties";
-            this.groupBoxPluginProperties.Size = new System.Drawing.Size(231, 277);
+            this.groupBoxPluginProperties.Size = new System.Drawing.Size(231, 219);
             this.groupBoxPluginProperties.TabIndex = 1;
             this.groupBoxPluginProperties.TabStop = false;
             this.groupBoxPluginProperties.Text = "Search conditions";
@@ -174,6 +181,7 @@
             // 
             // comboBoxPlugins
             // 
+            this.comboBoxPlugins.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxPlugins.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPlugins.FormattingEnabled = true;
@@ -209,7 +217,7 @@
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.Name = "listView";
             this.listView.ShowItemToolTips = true;
-            this.listView.Size = new System.Drawing.Size(460, 319);
+            this.listView.Size = new System.Drawing.Size(460, 261);
             this.listView.TabIndex = 0;
             this.toolTip.SetToolTip(this.listView, "Move cursor above status to see details");
             this.listView.UseCompatibleStateImageBehavior = false;
@@ -232,18 +240,19 @@
             // 
             // panelTargetText
             // 
+            this.panelTargetText.Controls.Add(this.groupBoxFolderName);
             this.panelTargetText.Controls.Add(this.groupBoxTargetText);
             this.panelTargetText.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTargetText.Location = new System.Drawing.Point(0, 25);
             this.panelTargetText.Name = "panelTargetText";
-            this.panelTargetText.Size = new System.Drawing.Size(695, 41);
+            this.panelTargetText.Size = new System.Drawing.Size(695, 99);
             this.panelTargetText.TabIndex = 1;
             // 
             // groupBoxTargetText
             // 
             this.groupBoxTargetText.Controls.Add(this.textBoxTargetText);
             this.groupBoxTargetText.Controls.Add(this.buttonSearch);
-            this.groupBoxTargetText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxTargetText.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxTargetText.Location = new System.Drawing.Point(0, 0);
             this.groupBoxTargetText.Name = "groupBoxTargetText";
             this.groupBoxTargetText.Size = new System.Drawing.Size(695, 41);
@@ -271,6 +280,60 @@
             this.buttonSearch.UseVisualStyleBackColor = true;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
+            // groupBoxFolderName
+            // 
+            this.groupBoxFolderName.Controls.Add(this.checkBoxRecursive);
+            this.groupBoxFolderName.Controls.Add(this.panelFolderName);
+            this.groupBoxFolderName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxFolderName.Location = new System.Drawing.Point(0, 41);
+            this.groupBoxFolderName.Name = "groupBoxFolderName";
+            this.groupBoxFolderName.Size = new System.Drawing.Size(695, 60);
+            this.groupBoxFolderName.TabIndex = 5;
+            this.groupBoxFolderName.TabStop = false;
+            this.groupBoxFolderName.Text = "Folder";
+            // 
+            // checkBoxRecursive
+            // 
+            this.checkBoxRecursive.AutoSize = true;
+            this.checkBoxRecursive.Dock = System.Windows.Forms.DockStyle.Top;
+            this.checkBoxRecursive.Location = new System.Drawing.Point(3, 38);
+            this.checkBoxRecursive.Name = "checkBoxRecursive";
+            this.checkBoxRecursive.Size = new System.Drawing.Size(689, 17);
+            this.checkBoxRecursive.TabIndex = 1;
+            this.checkBoxRecursive.Text = "Recursive";
+            this.checkBoxRecursive.UseVisualStyleBackColor = true;
+            // 
+            // panelFolderName
+            // 
+            this.panelFolderName.Controls.Add(this.textBoxFolderName);
+            this.panelFolderName.Controls.Add(this.buttonBrowseFolder);
+            this.panelFolderName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFolderName.Location = new System.Drawing.Point(3, 16);
+            this.panelFolderName.Name = "panelFolderName";
+            this.panelFolderName.Size = new System.Drawing.Size(689, 22);
+            this.panelFolderName.TabIndex = 0;
+            // 
+            // textBoxFolderName
+            // 
+            this.textBoxFolderName.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxFolderName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxFolderName.Location = new System.Drawing.Point(0, 0);
+            this.textBoxFolderName.Name = "textBoxFolderName";
+            this.textBoxFolderName.ReadOnly = true;
+            this.textBoxFolderName.Size = new System.Drawing.Size(614, 20);
+            this.textBoxFolderName.TabIndex = 1;
+            // 
+            // buttonBrowseFolder
+            // 
+            this.buttonBrowseFolder.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonBrowseFolder.Location = new System.Drawing.Point(614, 0);
+            this.buttonBrowseFolder.Name = "buttonBrowseFolder";
+            this.buttonBrowseFolder.Size = new System.Drawing.Size(75, 22);
+            this.buttonBrowseFolder.TabIndex = 0;
+            this.buttonBrowseFolder.Text = "Browse";
+            this.buttonBrowseFolder.UseVisualStyleBackColor = true;
+            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
+            // 
             // NTextSearchView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,6 +359,10 @@
             this.panelTargetText.ResumeLayout(false);
             this.groupBoxTargetText.ResumeLayout(false);
             this.groupBoxTargetText.PerformLayout();
+            this.groupBoxFolderName.ResumeLayout(false);
+            this.groupBoxFolderName.PerformLayout();
+            this.panelFolderName.ResumeLayout(false);
+            this.panelFolderName.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,6 +392,11 @@
         private System.Windows.Forms.ColumnHeader columnHeaderState;
         private System.Windows.Forms.ColumnHeader columnHeaderFileName;
         private System.Windows.Forms.ColumnHeader columnHeaderTag;
+        private System.Windows.Forms.GroupBox groupBoxFolderName;
+        private System.Windows.Forms.CheckBox checkBoxRecursive;
+        private System.Windows.Forms.Panel panelFolderName;
+        private System.Windows.Forms.TextBox textBoxFolderName;
+        private System.Windows.Forms.Button buttonBrowseFolder;
 
     }
 }

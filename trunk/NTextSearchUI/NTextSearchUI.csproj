@@ -50,10 +50,11 @@
   <ItemGroup>
     <Compile Include="Interfaces\ITextSearchPresenter.cs" />
     <Compile Include="Interfaces\ITextSearchView.cs" />
-    <Compile Include="Presenters\AbstractNotificationHandler.cs" />
-    <Compile Include="Presenters\EnableStateEventArgs.cs" />
-    <Compile Include="Presenters\ErrorNotificationHandler.cs" />
-    <Compile Include="Presenters\ListViewEventArgs.cs" />
+    <Compile Include="NotificationHandlers\AbstractNotificationHandler.cs" />
+    <Compile Include="EventArgs\EnableStateEventArgs.cs" />
+    <Compile Include="NotificationHandlers\ErrorNotificationHandler.cs" />
+    <Compile Include="EventArgs\ListViewEventArgs.cs" />
+    <Compile Include="NotificationHandlers\FileNotFoundNotificationHandler.cs" />
     <Compile Include="Presenters\NTextSearchPresenter.cs" />
     <Compile Include="NTextSearchView.cs">
       <SubType>Form</SubType>
@@ -61,6 +62,10 @@
     <Compile Include="NTextSearchView.Designer.cs">
       <DependentUpon>NTextSearchView.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotificationHandlers\TargetTextNotSpecifiedNotificationHandler.cs" />
+    <Compile Include="NotificationHandlers\TextFoundInFileNotificationHandler.cs" />
+    <Compile Include="NotificationHandlers\TextNotFoundInFileNotificationHandler.cs" />
+    <Compile Include="NotificationHandlers\WarningNotificationHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="NTextSearchView.resx">
@@ -88,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ExitIcon.png" />
-    <Content Include="Resources\RefreshPlugins.png" />
     <Content Include="Resources\RefreshPlugins16x16.png" />
   </ItemGroup>
   <ItemGroup>

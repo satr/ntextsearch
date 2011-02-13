@@ -7,5 +7,9 @@ namespace NTextSearch{
         }
 
         public abstract void Perform(TextSearchEventArg arg);
+
+        protected void AddListItem(string status, TextSearchEventArg arg){
+            Presenter.AddListItem(status, arg.FullFileName, arg.Message);
+        }
     }
 }

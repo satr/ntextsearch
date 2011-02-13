@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace NTextSearch {
@@ -10,25 +8,31 @@ namespace NTextSearch {
         public event EventHandler<EnableStateEventArgs> OnSearchEnabled;
         public event EventHandler<ListViewEventArgs> OnAddListItem;
 
-        private readonly Engine _engine;
+        public void ShowMessage(string format, params object[] args){
+            string message = string.Format(format, args);
+            View.SetStatus(message);
+            MessageBox.Show(message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private readonly Engine _engine = new Engine();
         private readonly Dictionary<TextSearchStatus, AbstractNotificationHandler> _notificationHandlers;
-        private string folderName;
         public ITextSearchView View { get; set; }
 
-        public NTextSearchPresenter(ITextSearchView view){
+        public NTextSearchPresenter(ITextSearchView view, string folderName){
             View = view;
-            _engine = new Engine();
+            FolderName = folderName;
             _notificationHandlers = InitTextSearchNotifyHandlers();
         }
 
         private Dictionary<TextSearchStatus, AbstractNotificationHandler> InitTextSearchNotifyHandlers() {
             var handlers = new Dictionary<TextSearchStatus, AbstractNotificationHandler>();
             handlers.Add(TextSearchStatus.Error, new ErrorNotificationHandler(this));
+            handlers.Add(TextSearchStatus.Warning, new WarningNotificationHandler(this));
+            handlers.Add(TextSearchStatus.TextFoundInFile, new TextFoundInFileNotificationHandler(this));
+            handlers.Add(TextSearchStatus.TextNotFoundInFile, new TextNotFoundInFileNotificationHandler(this));
+            handlers.Add(TextSearchStatus.FileNotFound, new FileNotFoundNotificationHandler(this));
+            handlers.Add(TextSearchStatus.TargetTextNotSpecified, new TargetTextNotSpecifiedNotificationHandler(this));
             return handlers;
-        }
-
-        private void AddErrorItem(TextSearchStatus status){
-            
         }
 
         public void Exit(){
@@ -52,6 +56,13 @@ namespace NTextSearch {
                 OnSearchEnabled(this, new EnableStateEventArgs(_engine.CurrentPlugin != null));
         }
 
+        public string FolderName {set; get;}
+
+        public bool Recusive{
+            get { return _engine.Recursive; }
+            set { _engine.Recursive = value; }
+        }
+
         private void Bind(ITextSearch plugin){
             plugin.OnNotify += plugin_OnNotify;
         }
@@ -61,13 +72,16 @@ namespace NTextSearch {
         }
 
         private void plugin_OnNotify(TextSearchEventArg args) {
-            if (_notificationHandlers.ContainsKey(args.TextSearchStatus))
+            if (!_notificationHandlers.ContainsKey(args.TextSearchStatus)){
+                Debug.Fail(string.Format("Notification status \"{0}\" is not supported", args.TextSearchStatus));
                 return;
+            }
             _notificationHandlers[args.TextSearchStatus].Perform(args);
         }
 
         public void PerformSearch(string text){
-            _engine.PerformSearch(folderName, text);
+            View.ClearList();
+            _engine.PerformSearch(FolderName, text);
         }
 
         public void AddListItem(string status, string fileName) {
@@ -79,7 +93,6 @@ namespace NTextSearch {
                 return;
             var listViewItem = new ListViewItem(new[]{status, fileName});
             listViewItem.ToolTipText = message;
-            listViewItem.SubItems[0].BackColor = Color.Red;
             OnAddListItem(this, new ListViewEventArgs(listViewItem));
         }
     }
