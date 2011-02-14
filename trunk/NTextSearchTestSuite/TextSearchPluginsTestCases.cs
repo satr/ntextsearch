@@ -30,6 +30,7 @@ namespace TextSearchTestSuite {
 
         [TestMethod]
         public void TestRegisterFileToProcess() {
+            _testPlugin.IsPaused = true;
             Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
             Assert.AreEqual(0, _textSearchEventArgs.Count);
             using (var file = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName)) {
@@ -51,12 +52,15 @@ namespace TextSearchTestSuite {
         }
 
         private void PerformTextSearch(string targetText, string textInFile, TextSearchStatus expectedStatus) {
+            _testPlugin.IsPaused = true;
             Assert.AreEqual(0, _textSearchEventArgs.Count);
             using (var file = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName, textInFile)) {
                 _testPlugin.TargetText = targetText;
-                Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
+                Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
                 Assert.AreEqual(0, _textSearchEventArgs.Count);
                 _testPlugin.RegisterFileToProcess(file.FullName);
+                Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
+                _testPlugin.IsPaused = false;
                 var textSearchEventArg = _textSearchEventArgs[0];
                 Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
                 Assert.AreEqual(1, _textSearchEventArgs.Count);
@@ -67,6 +71,7 @@ namespace TextSearchTestSuite {
 
         [TestMethod]
         public void TestRegisterSeveralFilesAndResetByNewSearch() {
+            _testPlugin.IsPaused = true;
             using (var file1 = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName)) {
                 using (var file2 = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName)) {
                     _testPlugin.TargetText = TEST_TEXT;
@@ -74,7 +79,7 @@ namespace TextSearchTestSuite {
                     _testPlugin.RegisterFileToProcess(file2.FullName);
                     Assert.AreEqual(2, _testPlugin.FilesToProcess.Count);
                     _testPlugin.TargetText = TEST_TEXT;
-                    Assert.AreEqual(2, _testPlugin.FilesToProcess.Count);
+                    Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
                     _testPlugin.TargetText = MISMATCH_TEST_TEXT;
                     Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
                 }

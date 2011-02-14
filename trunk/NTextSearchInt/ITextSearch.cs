@@ -12,6 +12,7 @@ namespace NTextSearch{
         void RegisterFileToProcess(string fileFullName);
         List<PluginProperty> Properties { get; }
         bool InProcess { get; }
+        bool IsPaused { get; set; }
         void Reset();
         void FileRegistrationCompleted();
     }
