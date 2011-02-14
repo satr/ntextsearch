@@ -17,6 +17,7 @@ namespace NTextSearch{
         private readonly Thread _searchPerformerThread;
         private bool _fileRegistrationCompleted;
         private int _processedFilesCount;
+        private bool _isPaused;
 
         protected AbstractTextSearchPlugin(){
             Properties = new List<PluginProperty>();
@@ -33,7 +34,7 @@ namespace NTextSearch{
                     ResetSignal();
                     if (_cancelationPending)
                         InProcess = _cancelationPending = false;
-                    if (!InProcess)
+                    if (IsPaused || !InProcess)
                         break;
                     string fileName = null;
                     lock (_sync){
@@ -101,6 +102,14 @@ namespace NTextSearch{
         public abstract string FileExtention { get; }
 
         public bool InProcess { get; protected set; }
+
+        public bool IsPaused{
+            get { return _isPaused; }
+            set{
+                _isPaused = value;
+                SetSignal();
+            }
+        }
 
         public virtual string SearchPattern{
             get { return string.Format("*.{0}", FileExtention); }
