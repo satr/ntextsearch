@@ -79,6 +79,7 @@
             this.textBoxTargetText = new System.Windows.Forms.TextBox();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripStatusLabelFoundFilesCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -136,7 +137,8 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
-            this.toolStripStatusLabel});
+            this.toolStripStatusLabel,
+            this.toolStripStatusLabelFoundFilesCount});
             this.statusStrip.Location = new System.Drawing.Point(0, 432);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(795, 22);
@@ -688,6 +690,11 @@
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
             // 
+            // toolStripStatusLabelFoundFilesCount
+            // 
+            this.toolStripStatusLabelFoundFilesCount.Name = "toolStripStatusLabelFoundFilesCount";
+            this.toolStripStatusLabelFoundFilesCount.Size = new System.Drawing.Size(0, 17);
+            // 
             // NTextSearchView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -792,6 +799,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown numericUpDownFileSizeMax;
         private System.Windows.Forms.NumericUpDown numericUpDownFileSizeMin;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFoundFilesCount;
 
     }
 }

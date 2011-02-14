@@ -14,6 +14,10 @@ namespace NTextSearchTestPlugin{
             _fileExtention = fileExtention;
         }
 
+        protected override bool MultyThreadEnabled{
+            get { return false; }
+        }
+
         public override string FileExtention {
             get { return _fileExtention; }
         }

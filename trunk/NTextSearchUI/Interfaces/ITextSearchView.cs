@@ -8,5 +8,6 @@ namespace NTextSearch{
         void ClearList();
         void RefreshPluginProperties(List<PluginProperty> pluginProperties);
         void RefreshSearchState(bool inProcess);
+        void SetFoundFilesStatus(string message);
     }
 }
