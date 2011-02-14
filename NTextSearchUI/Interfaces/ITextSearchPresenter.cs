@@ -17,5 +17,7 @@ namespace NTextSearch{
         event EventHandler<ListViewEventArgs> OnAddListItem;
         void ShowMessage(string format, params object[] args);
         void InterruptSearch();
+        bool SetPause(bool isPaused);
+        void Shutdown();
     }
 }

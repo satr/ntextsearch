@@ -70,11 +70,25 @@ namespace NTextSearch {
         public void PerformSearch(string text) {
             View.RefreshSearchState(true);
             View.ClearList();
+            View.SetStatus(string.Empty);
+            View.SetFoundFilesStatus(string.Empty);
             _searchEngineWorker.RunWorkerAsync(text);
         }
 
         public void InterruptSearch() {
             _engine.CancelSearch();
+        }
+
+        public bool SetPause(bool isPaused){
+            if (_engine.CurrentPlugin == null)
+                return false;
+            _engine.CurrentPlugin.IsPaused = isPaused;
+            return isPaused;
+        }
+
+        public void Shutdown(){
+            _engine.CancelSearch();
+            _engine.Plugins.ForEach(plugin => plugin.Shutdown());
         }
 
         public void AddListItem(string status, string fileName) {
@@ -92,8 +106,9 @@ namespace NTextSearch {
 
         public void Exit() {
             var dialogResult = MessageBox.Show("Do you really want to exit?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-            if (dialogResult == DialogResult.Yes)
-                View.Close();
+            if (dialogResult != DialogResult.Yes) 
+                return;
+            View.Close();
         }
 
         public void RefreshPlugins(){

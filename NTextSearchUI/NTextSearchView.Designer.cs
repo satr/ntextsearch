@@ -28,9 +28,11 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRefreshPlugins = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPauseSearch = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelFoundFilesCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelMain = new System.Windows.Forms.Panel();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.groupBoxPluginProperties = new System.Windows.Forms.GroupBox();
@@ -79,7 +81,6 @@
             this.textBoxTargetText = new System.Windows.Forms.TextBox();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripStatusLabelFoundFilesCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -108,7 +109,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonExit,
-            this.toolStripButtonRefreshPlugins});
+            this.toolStripButtonRefreshPlugins,
+            this.toolStripButtonPauseSearch});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(795, 25);
@@ -132,6 +134,16 @@
             this.toolStripButtonRefreshPlugins.Name = "toolStripButtonRefreshPlugins";
             this.toolStripButtonRefreshPlugins.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonRefreshPlugins.Text = "Refresh plugins";
+            // 
+            // toolStripButtonPauseSearch
+            // 
+            this.toolStripButtonPauseSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPauseSearch.Enabled = false;
+            this.toolStripButtonPauseSearch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPauseSearch.Image")));
+            this.toolStripButtonPauseSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPauseSearch.Name = "toolStripButtonPauseSearch";
+            this.toolStripButtonPauseSearch.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonPauseSearch.ToolTipText = "Pause the search";
             // 
             // statusStrip
             // 
@@ -157,6 +169,11 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Ready";
+            // 
+            // toolStripStatusLabelFoundFilesCount
+            // 
+            this.toolStripStatusLabelFoundFilesCount.Name = "toolStripStatusLabelFoundFilesCount";
+            this.toolStripStatusLabelFoundFilesCount.Size = new System.Drawing.Size(0, 17);
             // 
             // panelMain
             // 
@@ -690,11 +707,6 @@
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
             // 
-            // toolStripStatusLabelFoundFilesCount
-            // 
-            this.toolStripStatusLabelFoundFilesCount.Name = "toolStripStatusLabelFoundFilesCount";
-            this.toolStripStatusLabelFoundFilesCount.Size = new System.Drawing.Size(0, 17);
-            // 
             // NTextSearchView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -800,6 +812,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownFileSizeMax;
         private System.Windows.Forms.NumericUpDown numericUpDownFileSizeMin;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFoundFilesCount;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPauseSearch;
 
     }
 }

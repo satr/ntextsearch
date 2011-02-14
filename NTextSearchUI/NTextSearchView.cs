@@ -86,9 +86,19 @@ namespace NTextSearch{
             numericUpDownFileSizeMin.ValueChanged += (s, e) => RefreshFilePropertiesSize();
             numericUpDownFileSizeMax.ValueChanged += (s, e) => RefreshFilePropertiesSize();
             _fileAttributesControls.ForEach(cb => cb.CheckedChanged += (s,e)=>RefreshFileAttributes());
+            toolStripButtonPauseSearch.Click += (s, e) => ChangePauseState();
+            Closed += (s, e) => Presenter.Shutdown();
+        }
+
+        private void ChangePauseState(){
+            var isPaused = !toolStripButtonPauseSearch.Checked;
+            toolStripButtonPauseSearch.Checked = isPaused;
+            Presenter.SetPause(isPaused);
         }
 
         private void SearchButtonPressed(){
+            toolStripButtonPauseSearch.Checked = false;
+            toolStripButtonPauseSearch.Enabled = !_searchInProcess;
             if (_searchInProcess)
                 Presenter.InterruptSearch();
             else
@@ -195,6 +205,5 @@ namespace NTextSearch{
         private static string GetInitFolderName() {
             return Directory.Exists(INIT_FOLDER_NAME) ? INIT_FOLDER_NAME : @"C:\";
         }
-
     }
 }
