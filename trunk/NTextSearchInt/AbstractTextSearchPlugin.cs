@@ -24,6 +24,7 @@ namespace NTextSearch{
             FilesToProcess = new Queue<string>();
             _matchWholeWordPropertyId = AddBooleanProperty(false, "Match whole word");
             _searchPerformerThread = new Thread(PerformeSearchAsync);
+            _searchPerformerThread.IsBackground = true;
             _searchPerformerThread.Start();
         }
 
