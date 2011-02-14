@@ -10,7 +10,8 @@ namespace NTextSearch{
         void Shutdown();
         event TextSearchEventHandler OnNotify;
         void RegisterFileToProcess(string fileFullName);
-        void PerformSearch();
         List<PluginProperty> Properties { get; }
+        void Reset();
+        void FileRegistrationCompleted();
     }
 }
