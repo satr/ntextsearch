@@ -13,8 +13,7 @@ namespace NTextSearch{
         private readonly object _sync = new object();
         private readonly Guid _matchWholeWordPropertyId;
         private readonly EventWaitHandle _searchPerformerGo = new AutoResetEvent(false);
-        private bool _cancelationPenfing;
-        private bool _inProcess;
+        private bool _cancelationPending;
         private readonly Thread _searchPerformerThread;
         private bool _fileRegistrationCompleted;
         private int _processedFilesCount;
@@ -28,29 +27,29 @@ namespace NTextSearch{
         }
 
         private void PerformeSearchAsync(){
-            _inProcess = true;
+            InProcess = true;
             for (;;) {
                 _searchPerformerGo.WaitOne();
-                if (_cancelationPenfing) {
-                    _inProcess = _cancelationPenfing = false;
+                for (;;){
                     _searchPerformerGo.Reset();
-                }
-                if (!_inProcess)
-                    continue;
-                string fileName = null;
-                lock (_sync){
-                    if (FilesToProcess.Count != 0)
-                        fileName = FilesToProcess.Dequeue();
-                }
-                if (fileName != null){
-                    PerformSearchIn(new FileInfo(fileName));
-                    _processedFilesCount++;
-                }
-                else if (_fileRegistrationCompleted) {
-                    Notify(fileName, TextSearchStatus.SearchInFilesCompleted, 
-                           "{0} files were performed", _processedFilesCount);
-                    _inProcess = _cancelationPenfing = false;
-                    _searchPerformerGo.Reset();
+                    if (_cancelationPending)
+                        InProcess = _cancelationPending = false;
+                    if (!InProcess)
+                        break;
+                    string fileName = null;
+                    lock (_sync){
+                        if (FilesToProcess.Count != 0)
+                            fileName = FilesToProcess.Dequeue();
+                    }
+                    if (fileName != null){
+                        PerformSearchIn(new FileInfo(fileName));
+                        _processedFilesCount++;
+                    }
+                    else if (_fileRegistrationCompleted){
+                        InProcess = _cancelationPending = false;
+                        Notify(fileName, TextSearchStatus.SearchInFilesCompleted,
+                               "{0} files were performed", _processedFilesCount);
+                    }
                 }
             }
         }
@@ -72,6 +71,8 @@ namespace NTextSearch{
 
         public abstract string FileExtention { get; }
 
+        public bool InProcess { get; protected set; }
+
         public virtual string SearchPattern{
             get { return string.Format("*.{0}", FileExtention); }
         }
@@ -89,10 +90,8 @@ namespace NTextSearch{
         public string TargetText{
             get { return _targetText; }
             set{
-                if (_targetText == value)
-                    return;
-                _targetText = value;
                 Reset();
+                _targetText = value;
             }
         }
 
@@ -100,7 +99,7 @@ namespace NTextSearch{
             lock (_sync)
                 FilesToProcess.Clear();
             _processedFilesCount = 0;
-            _cancelationPenfing = true;
+            _cancelationPending = true;
             _searchPerformerGo.Set();
         }
 
@@ -122,7 +121,7 @@ namespace NTextSearch{
             lock (_sync){
                 if (!FilesToProcess.Contains(fileFullName)){
                     FilesToProcess.Enqueue(fileFullName);
-                    _inProcess = true;
+                    InProcess = true;
                     _searchPerformerGo.Set();
                 }
             }
@@ -143,21 +142,21 @@ namespace NTextSearch{
             }
         }
 
-        protected void Notify(string fullFileName, TextSearchStatus textSearchStatus, string format, params object[] args) {
-            Notify(new FileInfo(fullFileName), textSearchStatus, format, args);
+        protected void Notify(string fullFileName, TextSearchStatus textSearchStatus){
+            Notify(fullFileName, textSearchStatus, string.Empty);
         }
 
-        protected void Notify(string fullFileName, TextSearchStatus textSearchStatus){
-            Notify(new FileInfo(fullFileName), textSearchStatus);
+        protected void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus, string format, params object[] args) {
+            Notify(fileInfo.FullName, textSearchStatus, format, args);
         }
 
         protected void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus){
-            Notify(fileInfo, textSearchStatus, string.Empty);
+            Notify(fileInfo.FullName, textSearchStatus, string.Empty);
         }
 
-        protected void Notify(FileSystemInfo fileInfo, TextSearchStatus textSearchStatus, string format, params object[] args){
+        protected void Notify(string fullFileName, TextSearchStatus textSearchStatus, string format, params object[] args) {
             if (OnNotify != null)
-                OnNotify(new TextSearchEventArg(fileInfo.FullName, textSearchStatus, format, args));
+                OnNotify(new TextSearchEventArg(fullFileName?? string.Empty, textSearchStatus, format, args));
         }
 
         protected bool ValidateTextExistsIn(string value){
