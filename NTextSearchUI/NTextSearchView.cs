@@ -39,7 +39,9 @@ namespace NTextSearch{
                 Invoke(new Action<ListViewItem>(AddListItem), new object[] { listViewItem });
                 return;
             }
+            listView.SuspendLayout();
             listView.Items.Add(listViewItem);
+            listView.ResumeLayout(false);
         }
 
         private void InitFolderBrowser(string folderName) {
@@ -141,6 +143,10 @@ namespace NTextSearch{
 
         public void SetStatus(string message){
             toolStripStatusLabel.Text = message;
+        }
+
+        public void SetFoundFilesStatus(string message){
+            toolStripStatusLabelFoundFilesCount.Text = message;
         }
 
         public void ClearList(){

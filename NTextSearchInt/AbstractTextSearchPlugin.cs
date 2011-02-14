@@ -27,11 +27,10 @@ namespace NTextSearch{
         }
 
         private void PerformeSearchAsync(){
-            InProcess = true;
-            for (;;) {
-                _searchPerformerGo.WaitOne();
+            for (;;){
+                WaitForSignal();
                 for (;;){
-                    _searchPerformerGo.Reset();
+                    ResetSignal();
                     if (_cancelationPending)
                         InProcess = _cancelationPending = false;
                     if (!InProcess)
@@ -50,8 +49,38 @@ namespace NTextSearch{
                         Notify(fileName, TextSearchStatus.SearchInFilesCompleted,
                                "{0} files were performed", _processedFilesCount);
                     }
+                    if (!MultyThreadEnabled)
+                        break;
                 }
+                if (!MultyThreadEnabled)
+                    break;
             }
+        }
+
+        #region WaitHandler methods
+
+        private void WaitForSignal(){
+            if(MultyThreadEnabled)
+                _searchPerformerGo.WaitOne();
+        }
+
+        private void SetSignal() {
+            if (MultyThreadEnabled)
+                _searchPerformerGo.Set();
+            else
+                PerformeSearchAsync();
+        }
+
+        private void ResetSignal() {
+            if (MultyThreadEnabled)
+                _searchPerformerGo.Reset();
+        }
+
+
+        #endregion
+
+        protected virtual bool MultyThreadEnabled {
+            get { return true; }
         }
 
         public virtual event TextSearchEventHandler OnNotify;
@@ -100,7 +129,7 @@ namespace NTextSearch{
                 FilesToProcess.Clear();
             _processedFilesCount = 0;
             _cancelationPending = true;
-            _searchPerformerGo.Set();
+            SetSignal();
         }
 
         public void FileRegistrationCompleted(){
@@ -122,7 +151,7 @@ namespace NTextSearch{
                 if (!FilesToProcess.Contains(fileFullName)){
                     FilesToProcess.Enqueue(fileFullName);
                     InProcess = true;
-                    _searchPerformerGo.Set();
+                    SetSignal();
                 }
             }
             if(string.IsNullOrEmpty(TargetText))
@@ -160,7 +189,7 @@ namespace NTextSearch{
         }
 
         protected bool ValidateTextExistsIn(string value){
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(TargetText))
                 return false;
             if ((value.Equals(TargetText))
                 || (!MatchWholeWord && value.Contains(TargetText))) {//TODO - rework as strategy with comparers

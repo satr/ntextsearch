@@ -124,7 +124,7 @@ namespace NTextSearch {
         public void ShowMessage(string format, params object[] args) {
             string message = string.Format(format, args);
             View.SetStatus(message);
-            MessageBox.Show(message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+//            MessageBox.Show(message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         #endregion
@@ -180,7 +180,7 @@ namespace NTextSearch {
         }
 
         private void SearchEngineWorkerProgressChanged(object sender, ProgressChangedEventArgs e) {
-            View.SetStatus(string.Format("Search files: {0} found", e.ProgressPercentage));
+            View.SetFoundFilesStatus(string.Format("Search files: {0} found", e.ProgressPercentage));
         }
 
         private void SearchEngineWorkerCompletedSearch(object sender, RunWorkerCompletedEventArgs e) {

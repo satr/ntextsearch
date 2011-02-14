@@ -72,7 +72,7 @@ namespace NTextSearch {
             return !conditionValue.HasValue || !(conditionValue.Value ^ hasAttribute);
         }
 
-        public FileInfo[] GetFilesInFolder(string folderPath, bool recursive, ITextSearch plugin){
+        public FileInfo[]   GetFilesInFolder(string folderPath, bool recursive, ITextSearch plugin){
             if (plugin == null)
                 plugin = new NullPlugin();
             if (_cancellationPending){
@@ -80,6 +80,7 @@ namespace NTextSearch {
                 return new FileInfo[0];
             }
             var filesInFolder = GetFilesInFolder(folderPath, plugin);
+            filesInFolder.ToList().ForEach(fi => plugin.RegisterFileToProcess(fi.FullName));
             if(!recursive)
                 return filesInFolder;
             var fileInfoList = new List<FileInfo>(filesInFolder);
@@ -166,8 +167,7 @@ namespace NTextSearch {
             _inProcess = true;
             _cancellationPending = false;
             CurrentPlugin.TargetText = text;
-            foreach (var fileInfo in GetFilesInFolder(folderName, Recursive, CurrentPlugin))
-                CurrentPlugin.RegisterFileToProcess(fileInfo.FullName);
+            GetFilesInFolder(folderName, Recursive, CurrentPlugin);
             CurrentPlugin.FileRegistrationCompleted();
             _inProcess = false;
         }
