@@ -12,6 +12,7 @@ namespace NTextSearch {
         private DateTime? _filePropertyDateTo;
         private long? _filePropertySizeMin;
         private long? _filePropertySizeMax;
+        public event EventHandler OnFileFound;
 
         public Engine() {
             Plugins = new List<ITextSearch>();
@@ -30,14 +31,21 @@ namespace NTextSearch {
             foreach (var fileInfo in fileInfos){
                 var attributes = fileInfo.Attributes;
                 if (ValidateFileAttribute(_fileAttributes.ReadOnly, System.IO.FileAttributes.ReadOnly, attributes)
-                    && ValidateFileAttribute(_fileAttributes.Archive, System.IO.FileAttributes.Archive, attributes)
-                    && ValidateFileAttribute(_fileAttributes.Hidden, System.IO.FileAttributes.Hidden, attributes)
-                    && ValidateFileAttribute(_fileAttributes.System, System.IO.FileAttributes.System, attributes)
-                    && ValidateFilePropertyDate(fileInfo)
-                    && ValidateFilePropertySize(fileInfo))
+                        && ValidateFileAttribute(_fileAttributes.Archive, System.IO.FileAttributes.Archive, attributes)
+                        && ValidateFileAttribute(_fileAttributes.Hidden, System.IO.FileAttributes.Hidden, attributes)
+                        && ValidateFileAttribute(_fileAttributes.System, System.IO.FileAttributes.System, attributes)
+                        && ValidateFilePropertyDate(fileInfo)
+                        && ValidateFilePropertySize(fileInfo)){
                     validFiles.Add(fileInfo);
+                    NotifyFileFound();
+                }
             }
             return validFiles.ToArray();
+        }
+
+        private void NotifyFileFound(){
+            if (OnFileFound != null)
+                OnFileFound(this, EventArgs.Empty);
         }
 
         private bool ValidateFilePropertyDate(FileSystemInfo fileInfo){

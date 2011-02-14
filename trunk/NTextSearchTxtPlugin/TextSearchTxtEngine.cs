@@ -15,18 +15,19 @@ namespace NTextSearchTxtPlugin {
         }
 
         protected override void PerformSearchIn(FileInfo fileInfo) {
-            using (var reader = new StreamReader(fileInfo.OpenRead())) {
-                //TODO - check for requested break (or reset)
-                IComparable<string> comparer = GetComparer();
-                string line;
-                while((line = reader.ReadLine()) != null)
-                {
-                    if (comparer.CompareTo(line) > 0){
-                        Notify(fileInfo, TextSearchStatus.TextFoundInFile);
-                        return;
-                    }
-                }
-            }
+            //Test
+//            using (var reader = new StreamReader(fileInfo.OpenRead())) {
+//                //TODO - check for requested break (or reset)
+//                IComparable<string> comparer = GetComparer();
+//                string line;
+//                while((line = reader.ReadLine()) != null)
+//                {
+//                    if (comparer.CompareTo(line) > 0){
+//                        Notify(fileInfo, TextSearchStatus.TextFoundInFile);
+//                        return;
+//                    }
+//                }
+//            }
             Notify(fileInfo, TextSearchStatus.TextNotFoundInFile);
         }
 
