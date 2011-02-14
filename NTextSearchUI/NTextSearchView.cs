@@ -8,12 +8,14 @@ namespace NTextSearch{
         private const string INIT_FOLDER_NAME = @"C:\NSearchButtonTestFiles";
         private readonly FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
         private List<CheckBox> _fileAttributesControls;
+        private bool _searchInProcess;
         private ITextSearchPresenter Presenter { get; set; }
 
         public NTextSearchView() {
             InitializeComponent();
-            InitPresenter();
-            InitFolderBrowser();
+            var folderName = GetInitFolderName();
+            InitPresenter(folderName);
+            InitFolderBrowser(folderName);
             InitFilePropertiesDate();
             InitFileAttributes();
             Bind();
@@ -22,16 +24,27 @@ namespace NTextSearch{
 
         #region Initializers
 
-        private void InitPresenter() {
-            var folderName = Directory.Exists(INIT_FOLDER_NAME) ? INIT_FOLDER_NAME : @"C:\";
+        private void InitPresenter(string folderName) {
             Presenter = new NTextSearchPresenter(this, folderName);
             Presenter.OnSearchEnabled += (src, args) => buttonSearch.Enabled = args.Enable;
-            Presenter.OnAddListItem += (src, args) => listView.Items.Add(args.ListViewItem);
+            Presenter.OnAddListItem += Presenter_OnAddListItem;
         }
 
-        private void InitFolderBrowser() {
+        private void Presenter_OnAddListItem(object sender, ListViewEventArgs e){
+            AddListItem(e.ListViewItem);
+        }
+
+        private void AddListItem(ListViewItem listViewItem){
+            if (InvokeRequired) {
+                Invoke(new Action<ListViewItem>(AddListItem), new object[] { listViewItem });
+                return;
+            }
+            listView.Items.Add(listViewItem);
+        }
+
+        private void InitFolderBrowser(string folderName) {
             _folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
-            _folderBrowserDialog.SelectedPath = Presenter.FolderName;
+            _folderBrowserDialog.SelectedPath = folderName;
             SetFolderName();
         }
 
@@ -49,13 +62,17 @@ namespace NTextSearch{
             ClearFileProperties();
         }
 
-        private void Bind(){
+        #endregion
+
+        #region Bind event
+
+        private void Bind() {
             toolStripButtonExit.Click += (s, e) => Presenter.Exit();
             toolStripButtonRefreshPlugins.Click += (s, e) => Presenter.RefreshPlugins();
             comboBoxPlugins.SelectedIndexChanged += (s, e) => SelectedPlugin();
             buttonRefreshPlugins.Click += (s, e) => Presenter.RefreshPlugins();
             buttonBrowseFolder.Click += (s, e) => SelectFolder();
-            buttonSearch.Click += (s, e) => Presenter.PerformSearch(textBoxTargetText.Text);
+            buttonSearch.Click += (s, e) => SearchButtonPressed();
             checkBoxRecursive.CheckedChanged += (s, e) => RefreshRecusiveSearch();
             buttonClearFileAttributes.Click += (s, e) => ClearFileProperties();
             checkBoxFileDateFromEnabled.CheckedChanged += (s, e) => RefreshFilePropertiesDate();
@@ -67,6 +84,13 @@ namespace NTextSearch{
             numericUpDownFileSizeMin.ValueChanged += (s, e) => RefreshFilePropertiesSize();
             numericUpDownFileSizeMax.ValueChanged += (s, e) => RefreshFilePropertiesSize();
             _fileAttributesControls.ForEach(cb => cb.CheckedChanged += (s,e)=>RefreshFileAttributes());
+        }
+
+        private void SearchButtonPressed(){
+            if (_searchInProcess)
+                Presenter.InterruptSearch();
+            else
+                Presenter.PerformSearch(textBoxTargetText.Text);
         }
 
         #endregion
@@ -130,13 +154,18 @@ namespace NTextSearch{
             groupBoxPluginProperties.ResumeLayout(true);
         }
 
+        public void RefreshSearchState(bool inProcess){
+            _searchInProcess = inProcess;
+            buttonSearch.Text = inProcess ? "Cancel" : "Search";
+        }
+
         private void SelectFolder(){
             if (_folderBrowserDialog.ShowDialog() != DialogResult.Cancel)
                 SetFolderName();
         }
 
         private void SetFolderName(){
-            Presenter.FolderName = textBoxFolderName.Text = _folderBrowserDialog.SelectedPath;
+            Presenter.SetFolderName(textBoxFolderName.Text = _folderBrowserDialog.SelectedPath);
         }
 
         private static bool? GetFileAttributeValue(CheckBox checkBox) {
@@ -156,5 +185,10 @@ namespace NTextSearch{
             checkBoxFileSizeMinEnabled.Checked = checkBoxFileSizeMaxEnabled.Checked = false;
             _fileAttributesControls.ForEach(cb => cb.CheckState = CheckState.Indeterminate);
         }
+
+        private static string GetInitFolderName() {
+            return Directory.Exists(INIT_FOLDER_NAME) ? INIT_FOLDER_NAME : @"C:\";
+        }
+
     }
 }
