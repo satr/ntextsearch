@@ -20,10 +20,6 @@ namespace NTextSearch {
         private readonly BackgroundWorker _searchEngineWorker;
         private int _foundFilesCount;
         private string _folderName;
-        private readonly Queue<TextSearchEventArg> _statusesQueue = new Queue<TextSearchEventArg>();
-        private readonly EventWaitHandle _statusPerformerGo = new AutoResetEvent(false);
-        private readonly object _statusPerformerSync = new object();
-        private readonly Thread _statusPerformerThread;
 
         #endregion
 
@@ -33,17 +29,11 @@ namespace NTextSearch {
             _notificationHandlers = InitTextSearchNotifyHandlers();
             _engine = InitEngine();
             _searchEngineWorker = InitSearchEngineWorker();
-            _statusPerformerThread = InitSearchTextStatusPerformer();
         }
 
         public ITextSearchView View { get; set; }
 
         #region Initializers
-
-        private Thread InitSearchTextStatusPerformer(){
-            var statusPerformerThread = new Thread(PerformeSearchTextStatus);
-            return statusPerformerThread;
-        }
 
         private Dictionary<TextSearchStatus, AbstractNotificationHandler> InitTextSearchNotifyHandlers() {
             var handlers = new Dictionary<TextSearchStatus, AbstractNotificationHandler>();
@@ -53,12 +43,12 @@ namespace NTextSearch {
             handlers.Add(TextSearchStatus.TextNotFoundInFile, new TextNotFoundInFileNotificationHandler(this));
             handlers.Add(TextSearchStatus.FileNotFound, new FileNotFoundNotificationHandler(this));
             handlers.Add(TextSearchStatus.TargetTextNotSpecified, new TargetTextNotSpecifiedNotificationHandler(this));
+            handlers.Add(TextSearchStatus.SearchInFilesCompleted, new SearchInFilesCompletedNotificationHandler(this));
             return handlers;
         }
 
         private BackgroundWorker InitSearchEngineWorker() {
             var worker = new BackgroundWorker{
-                                                 WorkerSupportsCancellation = true,
                                                  WorkerReportsProgress = true,
                                              };
             worker.DoWork += PerformSearchAsync;
@@ -75,37 +65,16 @@ namespace NTextSearch {
 
         #endregion
 
-        #region StatusPerformer methods
-
-        private void PerformeSearchTextStatus() {
-            while (true) {
-                _statusPerformerGo.WaitOne();
-                TextSearchEventArg textSearchEventArg = null;
-                lock (_statusPerformerSync) {
-                    if (_statusesQueue.Count > 0)
-                        textSearchEventArg = _statusesQueue.Dequeue();
-                }
-                if (textSearchEventArg != null) {
-                    if (!_notificationHandlers.ContainsKey(textSearchEventArg.TextSearchStatus))
-                        throw new InvalidOperationException(string.Format("Notification status \"{0}\" is not supported", textSearchEventArg.TextSearchStatus));
-                    _notificationHandlers[textSearchEventArg.TextSearchStatus].Perform(textSearchEventArg);
-                }
-            }
-        }
-
-        #endregion
-
         #region ITestSearchPresenter methods
 
         public void PerformSearch(string text) {
             View.RefreshSearchState(true);
             View.ClearList();
-            _statusPerformerThread.Start();
             _searchEngineWorker.RunWorkerAsync(text);
         }
 
         public void InterruptSearch() {
-            _searchEngineWorker.CancelAsync();
+            _engine.CancelSearch();
         }
 
         public void AddListItem(string status, string fileName) {
@@ -140,7 +109,12 @@ namespace NTextSearch {
                 Bind(_engine.CurrentPlugin);
             if (OnSearchEnabled != null)
                 OnSearchEnabled(this, new EnableStateEventArgs(_engine.CurrentPlugin != null));
-            View.RefreshPluginProperties(_engine.CurrentPlugin.Properties);
+            var pluginProperties = new List<PluginProperty>();
+            if (_engine.CurrentPlugin != null){
+                _engine.CurrentPlugin.Reset();
+                pluginProperties = _engine.CurrentPlugin.Properties;
+            }
+            View.RefreshPluginProperties(pluginProperties);
         }
 
         public void SetFolderName(string folderName){
@@ -188,9 +162,7 @@ namespace NTextSearch {
         }
 
         private void plugin_OnNotify(TextSearchEventArg args) {
-            lock(_statusPerformerSync)
-                _statusesQueue.Enqueue(args);
-            _statusPerformerGo.Set();
+            _notificationHandlers[args.TextSearchStatus].Perform(args);
         }
 
         #endregion
@@ -203,7 +175,8 @@ namespace NTextSearch {
         }
 
         private void engine_OnFileFound(object sender, EventArgs e) {
-            _searchEngineWorker.ReportProgress(++_foundFilesCount);
+            if (_searchEngineWorker.IsBusy)
+                _searchEngineWorker.ReportProgress(++_foundFilesCount);
         }
 
         private void SearchEngineWorkerProgressChanged(object sender, ProgressChangedEventArgs e) {
@@ -213,8 +186,6 @@ namespace NTextSearch {
         private void SearchEngineWorkerCompletedSearch(object sender, RunWorkerCompletedEventArgs e) {
             View.RefreshSearchState(false);
             View.SetStatus("Search completed");
-            _statusPerformerThread.Join(1000);
-            _statusPerformerThread.Abort();
         }
 
         #endregion

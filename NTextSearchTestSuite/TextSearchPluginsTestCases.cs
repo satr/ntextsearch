@@ -54,10 +54,9 @@ namespace TextSearchTestSuite {
             Assert.AreEqual(0, _textSearchEventArgs.Count);
             using (var file = FSHelper.CreateFileTst(_fsHelper.TestFolder.FullName, textInFile)) {
                 _testPlugin.TargetText = targetText;
-                _testPlugin.RegisterFileToProcess(file.FullName);
                 Assert.AreEqual(1, _testPlugin.FilesToProcess.Count);
                 Assert.AreEqual(0, _textSearchEventArgs.Count);
-                _testPlugin.PerformSearch();
+                _testPlugin.RegisterFileToProcess(file.FullName);
                 var textSearchEventArg = _textSearchEventArgs[0];
                 Assert.AreEqual(0, _testPlugin.FilesToProcess.Count);
                 Assert.AreEqual(1, _textSearchEventArgs.Count);

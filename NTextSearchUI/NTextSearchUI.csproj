@@ -55,6 +55,7 @@
     <Compile Include="NotificationHandlers\ErrorNotificationHandler.cs" />
     <Compile Include="EventArgs\ListViewEventArgs.cs" />
     <Compile Include="NotificationHandlers\FileNotFoundNotificationHandler.cs" />
+    <Compile Include="NotificationHandlers\SearchInFilesCompletedNotificationHandler.cs" />
     <Compile Include="PluginPropertyControls\PluginPropertiesAssembler.cs" />
     <Compile Include="PluginPropertyControls\BooleanPluginPropertyControl.cs">
       <SubType>UserControl</SubType>

@@ -12,6 +12,8 @@ namespace NTextSearch {
         private DateTime? _filePropertyDateTo;
         private long? _filePropertySizeMin;
         private long? _filePropertySizeMax;
+        private bool _inProcess;
+        private bool _cancellationPending;
         public event EventHandler OnFileFound;
 
         public Engine() {
@@ -26,19 +28,24 @@ namespace NTextSearch {
             var directoryInfo = new DirectoryInfo(folderPath);
             if (!directoryInfo.Exists) 
                 return new FileInfo[0];
-            var fileInfos = directoryInfo.GetFiles(searchPattern);
             var validFiles = new List<FileInfo>();
-            foreach (var fileInfo in fileInfos){
-                var attributes = fileInfo.Attributes;
-                if (ValidateFileAttribute(_fileAttributes.ReadOnly, System.IO.FileAttributes.ReadOnly, attributes)
+            try{
+                var fileInfos = directoryInfo.GetFiles(searchPattern);
+                foreach (var fileInfo in fileInfos){
+                    var attributes = fileInfo.Attributes;
+                    if (ValidateFileAttribute(_fileAttributes.ReadOnly, System.IO.FileAttributes.ReadOnly, attributes)
                         && ValidateFileAttribute(_fileAttributes.Archive, System.IO.FileAttributes.Archive, attributes)
                         && ValidateFileAttribute(_fileAttributes.Hidden, System.IO.FileAttributes.Hidden, attributes)
                         && ValidateFileAttribute(_fileAttributes.System, System.IO.FileAttributes.System, attributes)
                         && ValidateFilePropertyDate(fileInfo)
                         && ValidateFilePropertySize(fileInfo)){
-                    validFiles.Add(fileInfo);
-                    NotifyFileFound();
+                        validFiles.Add(fileInfo);
+                        NotifyFileFound();
+                    }
                 }
+            }
+            catch (Exception ex){
+                LogError("File access", ex.Message);
             }
             return validFiles.ToArray();
         }
@@ -68,12 +75,22 @@ namespace NTextSearch {
         public FileInfo[] GetFilesInFolder(string folderPath, bool recursive, ITextSearch plugin){
             if (plugin == null)
                 plugin = new NullPlugin();
+            if (_cancellationPending){
+                plugin.Reset();
+                return new FileInfo[0];
+            }
             var filesInFolder = GetFilesInFolder(folderPath, plugin);
             if(!recursive)
                 return filesInFolder;
             var fileInfoList = new List<FileInfo>(filesInFolder);
-            foreach (var directoryInfo in new DirectoryInfo(folderPath).GetDirectories())
-                fileInfoList.AddRange(GetFilesInFolder(directoryInfo.FullName, true, plugin));
+            try{
+                string[] directories = Directory.GetDirectories(folderPath);
+                foreach (var directoryPath in directories)
+                    fileInfoList.AddRange(GetFilesInFolder(directoryPath, true, plugin));
+            }
+            catch (Exception ex){
+                LogError("File access problem", ex.Message);
+            }
             return fileInfoList.ToArray();
         }
 
@@ -84,6 +101,7 @@ namespace NTextSearch {
         }
 
         public void LoadPlugins(){
+            Plugins.ForEach(plugin => plugin.Shutdown());
             Plugins.Clear();
             DirectoryInfo pluginsFolder = PluginsFolder;
             if (!pluginsFolder.Exists) {
@@ -145,12 +163,14 @@ namespace NTextSearch {
         public void PerformSearch(string folderName, string text){
             if (!ValidateSearchAvailable(text))
                 return;
+            _inProcess = true;
+            _cancellationPending = false;
             CurrentPlugin.TargetText = text;
-            foreach (var fileInfo in GetFilesInFolder(folderName, Recursive, CurrentPlugin)){
+            foreach (var fileInfo in GetFilesInFolder(folderName, Recursive, CurrentPlugin))
                 CurrentPlugin.RegisterFileToProcess(fileInfo.FullName);
-                CurrentPlugin.PerformSearch();
-            }
-            //TODO - notify about search process completion
+            if (CurrentPlugin != null)
+                CurrentPlugin.FileRegistrationCompleted();
+            _inProcess = false;
         }
 
         public bool Recursive { get; set; }
@@ -198,5 +218,10 @@ namespace NTextSearch {
             }
         }
         #endregion
+
+        public void CancelSearch(){
+            if(_inProcess)
+                _cancellationPending = true;
+        }
     }
 }
