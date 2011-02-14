@@ -11,6 +11,7 @@ namespace NTextSearch{
         event TextSearchEventHandler OnNotify;
         void RegisterFileToProcess(string fileFullName);
         List<PluginProperty> Properties { get; }
+        bool InProcess { get; }
         void Reset();
         void FileRegistrationCompleted();
     }

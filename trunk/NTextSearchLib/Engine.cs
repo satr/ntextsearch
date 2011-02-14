@@ -168,8 +168,7 @@ namespace NTextSearch {
             CurrentPlugin.TargetText = text;
             foreach (var fileInfo in GetFilesInFolder(folderName, Recursive, CurrentPlugin))
                 CurrentPlugin.RegisterFileToProcess(fileInfo.FullName);
-            if (CurrentPlugin != null)
-                CurrentPlugin.FileRegistrationCompleted();
+            CurrentPlugin.FileRegistrationCompleted();
             _inProcess = false;
         }
 
